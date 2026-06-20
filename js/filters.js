@@ -2,35 +2,41 @@
 
 /* =========================================================
    Bite & Beans — Menu Filters
-   Animate menu cards between All / Drinks / Food
+   Show/hide entire category sections by slug
    ========================================================= */
 
 (function () {
   'use strict';
 
-  function filterItems(filter) {
-    const cards = document.querySelectorAll('.menu-card');
-    if (!cards.length) return;
+  function filterSections(filter) {
+    const sections = document.querySelectorAll('.menu-section');
+    if (!sections.length) return;
 
-    cards.forEach((card) => {
-      const type = card.getAttribute('data-type');
-      const match = filter === 'all' || type === filter;
+    sections.forEach((section) => {
+      const slug = section.getAttribute('data-category');
+      const match = filter === 'all' || slug === filter;
 
       if (match) {
-        card.style.display = '';
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(12px)';
+        section.style.display = '';
+        section.style.opacity = '0';
+        
+        // Auto expand if filtering to a single category; collapse by default on All
+        if (filter !== 'all') {
+          section.classList.add('expanded');
+        } else {
+          section.classList.remove('expanded');
+        }
+
         requestAnimationFrame(() => {
-          card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
+          section.style.transition = 'opacity 0.35s ease';
+          section.style.opacity = '1';
         });
       } else {
-        card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.96)';
+        section.style.transition = 'opacity 0.25s ease';
+        section.style.opacity = '0';
+        section.classList.remove('expanded');
         setTimeout(() => {
-          card.style.display = 'none';
+          section.style.display = 'none';
         }, 250);
       }
     });
@@ -38,23 +44,38 @@
 
   function bindEvents() {
     document.addEventListener('click', (e) => {
+      // 1. Filter button click
       const btn = e.target.closest('.filter-bar__btn');
-      if (!btn) return;
+      if (btn) {
+        const filter = btn.getAttribute('data-filter');
+        const bar = btn.closest('.filter-bar');
 
-      const filter = btn.getAttribute('data-filter');
-      const bar = btn.closest('.filter-bar');
+        bar.querySelectorAll('.filter-bar__btn').forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
 
-      bar.querySelectorAll('.filter-bar__btn').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
+        filterSections(filter);
+        return;
+      }
 
-      filterItems(filter);
+      // 2. Accordion banner click
+      const banner = e.target.closest('.menu-section__banner');
+      if (banner) {
+        const section = banner.closest('.menu-section');
+        if (section) {
+          section.classList.toggle('expanded');
+        }
+      }
     });
   }
 
   window.initFilters = function () {
     const activeBtn = document.querySelector('.filter-bar__btn.active');
     if (activeBtn) {
-      filterItems(activeBtn.getAttribute('data-filter'));
+      filterSections(activeBtn.getAttribute('data-filter'));
     }
   };
 

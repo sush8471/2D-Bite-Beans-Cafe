@@ -19,7 +19,9 @@
   const nextBtn = lightbox.querySelector('.lightbox__arrow--next');
 
   function getItems() {
+    // Only collect cards that are currently visible (not filtered out)
     return Array.from(document.querySelectorAll('.menu-card'))
+      .filter((card) => card.style.display !== 'none')
       .map((card) => {
         const img = card.querySelector('img');
         const tag = card.querySelector('.menu-card__tag');
@@ -27,15 +29,18 @@
           src: img ? img.src : '',
           alt: img ? img.alt : '',
           category: tag ? tag.textContent : '',
+          dataIndex: parseInt(card.getAttribute('data-index'), 10),
         };
       });
   }
 
-  function open(index) {
+  function open(rawDataIndex) {
     items = getItems();
     if (!items.length) return;
 
-    currentIndex = ((index % items.length) + items.length) % items.length;
+    // Map the card's data-index to its position within the visible set
+    const positionInVisible = items.findIndex((item) => item.dataIndex === rawDataIndex);
+    currentIndex = positionInVisible !== -1 ? positionInVisible : 0;
     updateImage(false);
 
     lightbox.hidden = false;
