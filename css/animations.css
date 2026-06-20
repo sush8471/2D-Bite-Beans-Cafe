@@ -1,0 +1,108 @@
+/* animations.css */
+
+/* =========================================================
+   Bite & Beans — Animations
+   Scroll reveals, hover states, page transitions
+   ========================================================= */
+
+/* ---------- Scroll reveal base ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for grouped reveals */
+.reveal-group .reveal:nth-child(1) { transition-delay: 0s; }
+.reveal-group .reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal-group .reveal:nth-child(3) { transition-delay: 0.16s; }
+.reveal-group .reveal:nth-child(4) { transition-delay: 0.24s; }
+.reveal-group .reveal:nth-child(5) { transition-delay: 0.32s; }
+.reveal-group .reveal:nth-child(6) { transition-delay: 0.4s; }
+
+/* Ensure hero elements are visible immediately */
+.hero .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Hero parallax ---------- */
+.hero__bg {
+  transition: transform 0.1s linear;
+}
+
+/* ---------- Image hover zoom ---------- */
+.image-hover-zoom {
+  overflow: hidden;
+}
+
+.image-hover-zoom img {
+  transition: transform var(--transition-base);
+}
+
+.image-hover-zoom:hover img {
+  transform: scale(1.03);
+}
+
+/* ---------- Link underline draw (center out) ---------- */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1.5px;
+  background-color: currentColor;
+  transition: width var(--transition-base), left var(--transition-base);
+}
+
+.link-underline:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+/* ---------- Button press ---------- */
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ---------- Card lift ---------- */
+.card-lift {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero__bg {
+    transition: none;
+  }
+
+  .image-hover-zoom img,
+  .link-underline::after,
+  .btn,
+  .card-lift {
+    transition: none;
+  }
+}

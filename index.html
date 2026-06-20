@@ -1,0 +1,65 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Bite & Beans 2D Cafe House — Guwahati's first 2D-themed cafe. Step into a sketchbook of Korean & Japanese comfort food, boba, and specialty coffee." />
+  <meta name="theme-color" content="#8B2635" />
+  <title>Bite & Beans — 2D Cafe House | Guwahati</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <!-- Top navigation with hamburger for mobile -->
+  <header class="top-nav" role="banner">
+    <div class="top-nav__inner">
+      <a href="#home" class="top-nav__logo" aria-label="Bite & Beans Home">
+        <img src="assets/Logo/Gemini_Generated_Image_pejfj1pejfj1pejf.png" alt="Bite & Beans 2D Cafe House logo" loading="eager" />
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" id="menu-toggle">
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+      </button>
+      <nav class="top-nav__links" id="top-nav-links" aria-label="Main navigation">
+        <a href="#home" data-page="home" class="nav-link active">Home</a>
+        <a href="#menu" data-page="menu" class="nav-link">Menu</a>
+        <a href="#experience" data-page="experience" class="nav-link">Experience</a>
+        <a href="#visit" data-page="visit" class="nav-link">Visit Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content area -->
+  <main id="app" role="main" aria-live="polite"></main>
+
+  <!-- Lightbox overlay -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button class="lightbox__close" aria-label="Close image viewer">✕</button>
+    <button class="lightbox__arrow lightbox__arrow--prev" aria-label="Previous image">‹</button>
+    <button class="lightbox__arrow lightbox__arrow--next" aria-label="Next image">›</button>
+    <div class="lightbox__stage">
+      <img class="lightbox__image" src="" alt="" />
+      <p class="lightbox__caption"></p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/router.js"></script>
+  <script src="js/lightbox.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/scroll-reveal.js"></script>
+</body>
+</html>
+
