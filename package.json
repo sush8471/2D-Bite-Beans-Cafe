@@ -1,0 +1,30 @@
+{
+  "name": "bite-and-beans",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@11.20.0",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed:generate": "node scripts/generate-seed.mjs",
+    "setup:generate": "node scripts/generate-setup.mjs",
+    "content:extract": "node scripts/extract-legacy-content.mjs"
+  },
+  "dependencies": {
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.119.0",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "5.9.3"
+  }
+}
