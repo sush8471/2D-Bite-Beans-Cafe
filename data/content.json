@@ -1,0 +1,1540 @@
+{
+  "settings": {
+    "brand_name": "Bite & Beans",
+    "logo_url": "/assets/Logo/Gemini_Generated_Image_pejfj1pejfj1pejf.png",
+    "hero_image_url": "/assets/Infrastructure/Screenshot_20260619_144933.jpg",
+    "visit_image_url": "/assets/Infrastructure/Screenshot_20260619_145037.jpg",
+    "snapshot_image_url": "/assets/Infrastructure/Screenshot_20260619_145024.jpg",
+    "address": "Rajgarh Rd, Sarania Hills, Guwahati, Assam 781003",
+    "maps_url": "https://www.google.com/maps/search/?api=1&query=Bite+%26+Beans+Sarania+Hills+Guwahati",
+    "hours_days": "Monday — Sunday",
+    "hours_time": "12:00 PM — 10:00 PM",
+    "phone": "060004 87453",
+    "whatsapp_number": "918135972387",
+    "instagram_handle": "@biteandbeanss",
+    "instagram_url": "https://instagram.com/biteandbeanss",
+    "average_spend": "Rs. 200 — 400",
+    "meta_title": "Bite & Beans — 2D Cafe House | Guwahati",
+    "meta_description": "Bite & Beans 2D Cafe House — Guwahati's first 2D-themed cafe. Step into a sketchbook of Korean & Japanese comfort food, boba, and specialty coffee.",
+    "theme_color": "#8B2635"
+  },
+  "copy": [
+    {
+      "key": "home.hero.title",
+      "page": "home",
+      "label": "Hero title",
+      "value": "Guwahati's First & Only 2D Cafe",
+      "multiline": false,
+      "sort_order": 10
+    },
+    {
+      "key": "home.hero.subtitle",
+      "page": "home",
+      "label": "Hero subtitle",
+      "value": "Where every corner feels like a sketchbook come to life",
+      "multiline": false,
+      "sort_order": 20
+    },
+    {
+      "key": "home.space.label",
+      "page": "home",
+      "label": "Space label",
+      "value": "The Space",
+      "multiline": false,
+      "sort_order": 30
+    },
+    {
+      "key": "home.space.title",
+      "page": "home",
+      "label": "Space title",
+      "value": "Step Into a Sketchbook",
+      "multiline": false,
+      "sort_order": 40
+    },
+    {
+      "key": "home.space.body",
+      "page": "home",
+      "label": "Space description",
+      "value": "Monochrome walls, ink-style furniture, and surreal comic-book aesthetics await around every corner.",
+      "multiline": true,
+      "sort_order": 50
+    },
+    {
+      "key": "home.highlights.label",
+      "page": "home",
+      "label": "Highlights label",
+      "value": "Fan Favourites",
+      "multiline": false,
+      "sort_order": 60
+    },
+    {
+      "key": "home.highlights.title",
+      "page": "home",
+      "label": "Highlights title",
+      "value": "Menu Highlights",
+      "multiline": false,
+      "sort_order": 70
+    },
+    {
+      "key": "home.vibe.label",
+      "page": "home",
+      "label": "Features label",
+      "value": "Why You'll Love Us",
+      "multiline": false,
+      "sort_order": 80
+    },
+    {
+      "key": "home.visit.title",
+      "page": "home",
+      "label": "Visit card title",
+      "value": "Visit Us",
+      "multiline": false,
+      "sort_order": 90
+    },
+    {
+      "key": "menu.header.label",
+      "page": "menu",
+      "label": "Page label",
+      "value": "Taste the Art",
+      "multiline": false,
+      "sort_order": 10
+    },
+    {
+      "key": "menu.header.title",
+      "page": "menu",
+      "label": "Page title",
+      "value": "Our Menu",
+      "multiline": false,
+      "sort_order": 20
+    },
+    {
+      "key": "menu.header.body",
+      "page": "menu",
+      "label": "Page description",
+      "value": "Korean & Japanese comfort food, boba creations, and specialty coffee",
+      "multiline": true,
+      "sort_order": 30
+    },
+    {
+      "key": "menu.addons.title",
+      "page": "menu",
+      "label": "Add-ons title",
+      "value": "Add-Ons",
+      "multiline": false,
+      "sort_order": 40
+    },
+    {
+      "key": "menu.addons.subtitle",
+      "page": "menu",
+      "label": "Add-ons subtitle",
+      "value": "Customise any dish to your taste",
+      "multiline": false,
+      "sort_order": 50
+    },
+    {
+      "key": "menu.cta.title",
+      "page": "menu",
+      "label": "CTA title",
+      "value": "Hungry? Let's Make It Happen.",
+      "multiline": false,
+      "sort_order": 60
+    },
+    {
+      "key": "menu.cta.body",
+      "page": "menu",
+      "label": "CTA description",
+      "value": "Reserve your table or place an order on WhatsApp",
+      "multiline": false,
+      "sort_order": 70
+    },
+    {
+      "key": "experience.header.label",
+      "page": "experience",
+      "label": "Page label",
+      "value": "Inside the Sketchbook",
+      "multiline": false,
+      "sort_order": 10
+    },
+    {
+      "key": "experience.header.title",
+      "page": "experience",
+      "label": "Page title",
+      "value": "The 2D Experience",
+      "multiline": false,
+      "sort_order": 20
+    },
+    {
+      "key": "experience.header.body",
+      "page": "experience",
+      "label": "Page description",
+      "value": "Every wall, chair, and detail is designed to make you feel like you've stepped inside a drawing",
+      "multiline": true,
+      "sort_order": 30
+    },
+    {
+      "key": "visit.header.label",
+      "page": "visit",
+      "label": "Page label",
+      "value": "Find Us",
+      "multiline": false,
+      "sort_order": 10
+    },
+    {
+      "key": "visit.header.title",
+      "page": "visit",
+      "label": "Page title",
+      "value": "Plan Your Visit",
+      "multiline": false,
+      "sort_order": 20
+    },
+    {
+      "key": "visit.header.body",
+      "page": "visit",
+      "label": "Page description",
+      "value": "We're waiting with a warm bowl and a sketchbook backdrop",
+      "multiline": true,
+      "sort_order": 30
+    },
+    {
+      "key": "visit.amenities.title",
+      "page": "visit",
+      "label": "Amenities title",
+      "value": "Amenities",
+      "multiline": false,
+      "sort_order": 40
+    },
+    {
+      "key": "visit.cta.title",
+      "page": "visit",
+      "label": "CTA title",
+      "value": "Ready to Step Into the Sketch?",
+      "multiline": false,
+      "sort_order": 50
+    },
+    {
+      "key": "visit.cta.body",
+      "page": "visit",
+      "label": "CTA description",
+      "value": "Reservations recommended during peak hours",
+      "multiline": false,
+      "sort_order": 60
+    },
+    {
+      "key": "global.cta.explore_menu",
+      "page": "global",
+      "label": "Hero button",
+      "value": "Explore Menu",
+      "multiline": false,
+      "sort_order": 10
+    },
+    {
+      "key": "global.cta.view_menu",
+      "page": "global",
+      "label": "View full menu button",
+      "value": "View Full Menu",
+      "multiline": false,
+      "sort_order": 20
+    },
+    {
+      "key": "global.cta.see_gallery",
+      "page": "global",
+      "label": "See gallery button",
+      "value": "See Full Gallery",
+      "multiline": false,
+      "sort_order": 30
+    },
+    {
+      "key": "global.cta.reserve",
+      "page": "global",
+      "label": "WhatsApp button",
+      "value": "Reserve on WhatsApp",
+      "multiline": false,
+      "sort_order": 40
+    },
+    {
+      "key": "global.cta.plan_visit",
+      "page": "global",
+      "label": "Plan visit button",
+      "value": "Plan Your Visit",
+      "multiline": false,
+      "sort_order": 50
+    },
+    {
+      "key": "global.cta.call",
+      "page": "global",
+      "label": "Call button",
+      "value": "Call Us",
+      "multiline": false,
+      "sort_order": 60
+    }
+  ],
+  "categories": [
+    {
+      "slug": "appetizers",
+      "name": "Appetizers & Street Food",
+      "filter_label": "Appetizers",
+      "icon": "🍗",
+      "image_url": "/assets/Menu/SnapInsta.to_657361529_18074624954634821_2762118125821715897_n.jpg",
+      "is_compact": false,
+      "sort_order": 10,
+      "is_published": true,
+      "items": [
+        {
+          "name": "Twigim Chicken",
+          "description": "Succulent golden-fried chicken coated in a tantalizing sweet and spicy garlic glaze.",
+          "is_new": false,
+          "sort_order": 10,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Chicken",
+              "price": 390,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Chicken Wing Tempura",
+          "description": "Japanese-style chicken wings, expertly fried to a crispy exterior with a juicy interior, seasoned with our signature spice blend.",
+          "is_new": false,
+          "sort_order": 20,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 400,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Buldak Chicken Wings",
+          "description": "Crispy chicken wings, bursting with fiery heat, generously coated in irresistibly spicy buldak sauce.",
+          "is_new": false,
+          "sort_order": 30,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Hot wings",
+              "price": 430,
+              "sort_order": 10
+            },
+            {
+              "label": "2x Hot wings",
+              "price": 440,
+              "sort_order": 20
+            },
+            {
+              "label": "Hot wings + Cheese",
+              "price": 450,
+              "sort_order": 30
+            },
+            {
+              "label": "2x Hot wings + Cheese",
+              "price": 460,
+              "sort_order": 40
+            }
+          ]
+        },
+        {
+          "name": "Shrimp Tempura",
+          "description": "A delicate, crispy tempura with a mild savory flavor, served with fresh salad and house-made mayo.",
+          "is_new": false,
+          "sort_order": 40,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 400,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Korean Corndog",
+          "description": "A hot dog coated in crispy deep-fried batter, served with your choice of toppings.",
+          "is_new": false,
+          "sort_order": 50,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Chicken sausage",
+              "price": 240,
+              "sort_order": 10
+            },
+            {
+              "label": "Classic cheese",
+              "price": 240,
+              "sort_order": 20
+            },
+            {
+              "label": "Sausage Cheese",
+              "price": 280,
+              "sort_order": 30
+            },
+            {
+              "label": "Potato Cheese",
+              "price": 280,
+              "sort_order": 40
+            }
+          ]
+        },
+        {
+          "name": "Jumbo Pink Mandu",
+          "description": "Jumbo momos infused with vibrant beetroot and a juicy tender center. Served with in-house peanut dip and chilli oil.",
+          "is_new": false,
+          "sort_order": 60,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Chicken",
+              "price": 240,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Korean Tteokbokki",
+          "description": "Korean rice cakes in a sweet and spicy sauce, garnished with your choice of toppings.",
+          "is_new": false,
+          "sort_order": 70,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 400,
+              "sort_order": 10
+            },
+            {
+              "label": "Cheese",
+              "price": 440,
+              "sort_order": 20
+            },
+            {
+              "label": "Chicken",
+              "price": 460,
+              "sort_order": 30
+            }
+          ]
+        },
+        {
+          "name": "Korean Rakbokki",
+          "description": "A delicious blend of ramen and soft Korean rice cakes in a sweet and spicy broth.",
+          "is_new": false,
+          "sort_order": 80,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 390,
+              "sort_order": 10
+            },
+            {
+              "label": "Cheese",
+              "price": 400,
+              "sort_order": 20
+            },
+            {
+              "label": "Chicken",
+              "price": 410,
+              "sort_order": 30
+            }
+          ]
+        },
+        {
+          "name": "Cucumber Banchan",
+          "description": "Tangy spicy Korean Cucumber Salad (Oi Muchim) — crunchy, cool, and refreshing.",
+          "is_new": false,
+          "sort_order": 90,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 240,
+              "sort_order": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "mains",
+      "name": "Mains & Bowls",
+      "filter_label": "Mains",
+      "icon": "🍜",
+      "image_url": "/assets/Menu/SnapInsta.to_657718400_18074624915634821_8389278748129045694_n.jpg",
+      "is_compact": false,
+      "sort_order": 20,
+      "is_published": true,
+      "items": [
+        {
+          "name": "Soo.... Ramen-tic",
+          "description": "A renowned noodle dish from Korea and Japan, brought to life with our signature spicy broth. Select your desired spice level.",
+          "is_new": false,
+          "sort_order": 10,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 280,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 310,
+              "sort_order": 20
+            },
+            {
+              "label": "Seafood",
+              "price": 410,
+              "sort_order": 30
+            },
+            {
+              "label": "Mixed",
+              "price": 450,
+              "sort_order": 40
+            }
+          ]
+        },
+        {
+          "name": "Kimchi Ramyun",
+          "description": "A hearty noodle soup brimming with sweet and sour umami flavors, ideal to elevate your spirits.",
+          "is_new": false,
+          "sort_order": 20,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 300,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 340,
+              "sort_order": 20
+            },
+            {
+              "label": "Seafood",
+              "price": 440,
+              "sort_order": 30
+            },
+            {
+              "label": "Mixed",
+              "price": 450,
+              "sort_order": 40
+            }
+          ]
+        },
+        {
+          "name": "Japanese Katsu",
+          "description": "Crispy golden-brown cutlet coated in fluffy Japanese panko, served with house-made mayo and cabbage coleslaw.",
+          "is_new": false,
+          "sort_order": 30,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Tofu",
+              "price": 290,
+              "sort_order": 10
+            },
+            {
+              "label": "Cottage Cheese",
+              "price": 290,
+              "sort_order": 20
+            },
+            {
+              "label": "Chicken",
+              "price": 300,
+              "sort_order": 30
+            },
+            {
+              "label": "Fish",
+              "price": 380,
+              "sort_order": 40
+            }
+          ]
+        },
+        {
+          "name": "Buldak Jajangmyeon",
+          "description": "Korean noodle dish topped with a thick sauce made of chunjang, diced pork, and vegetables.",
+          "is_new": false,
+          "sort_order": 40,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Classic",
+              "price": 360,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 380,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Dolsot Bibimbaap",
+          "description": "A hot bowl of rice with individually prepared seasoned vegetables and a choice of protein. Bibim means mixing, bap is cooked rice.",
+          "is_new": false,
+          "sort_order": 50,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 390,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 400,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Kimchi Fried Rice",
+          "description": "Spicy, tangy, savory, and slightly sweet. Fermented kimchi, gochujang, and soy sauce create an umami-rich combination.",
+          "is_new": false,
+          "sort_order": 60,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan",
+              "price": 280,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 320,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Mini Bento",
+          "description": "Steamed rice with our signature in-house furikake seasoning, paired with your choice of protein and gravy.",
+          "is_new": false,
+          "sort_order": 70,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Vegan/Veg",
+              "price": 260,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 280,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Premium Bento",
+          "description": "Two furikake rice balls, crispy katsu, and your choice of protein gravy, served with refreshing salad and umami kimchi.",
+          "is_new": false,
+          "sort_order": 80,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Veg/Vegan",
+              "price": 450,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 460,
+              "sort_order": 20
+            },
+            {
+              "label": "Seafood",
+              "price": 510,
+              "sort_order": 30
+            },
+            {
+              "label": "Mixed",
+              "price": 560,
+              "sort_order": 40
+            }
+          ]
+        },
+        {
+          "name": "Crispy Kimbap",
+          "description": "Rice, a variety of vegetables, and your choice of protein, all wrapped in crispy seaweed.",
+          "is_new": false,
+          "sort_order": 90,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Veg/Vegan",
+              "price": 370,
+              "sort_order": 10
+            },
+            {
+              "label": "Chicken",
+              "price": 390,
+              "sort_order": 20
+            },
+            {
+              "label": "Crispy Shrimp",
+              "price": 470,
+              "sort_order": 30
+            }
+          ]
+        },
+        {
+          "name": "Korean Kimbap",
+          "description": "Rice, a variety of vegetables, and your choice of protein, all wrapped in seaweed.",
+          "is_new": false,
+          "sort_order": 100,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Veg/Vegan",
+              "price": 370,
+              "sort_order": 10
+            },
+            {
+              "label": "Egg",
+              "price": 360,
+              "sort_order": 20
+            },
+            {
+              "label": "Chicken",
+              "price": 380,
+              "sort_order": 30
+            },
+            {
+              "label": "Tuna",
+              "price": 470,
+              "sort_order": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hot",
+      "name": "Hot Beverages",
+      "filter_label": "Hot Drinks",
+      "icon": "☕️",
+      "image_url": "/assets/Menu/SnapInsta.to_657347414_18074624927634821_5842886881784906437_n.jpg",
+      "is_compact": true,
+      "sort_order": 30,
+      "is_published": true,
+      "items": [
+        {
+          "name": "Espresso",
+          "description": null,
+          "is_new": false,
+          "sort_order": 10,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 90,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Cappuccino",
+          "description": null,
+          "is_new": false,
+          "sort_order": 20,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 160,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Americano",
+          "description": null,
+          "is_new": false,
+          "sort_order": 30,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 130,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Mocha",
+          "description": null,
+          "is_new": false,
+          "sort_order": 40,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 190,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Vanilla Latte",
+          "description": null,
+          "is_new": false,
+          "sort_order": 50,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 190,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Cinnamon Latte",
+          "description": null,
+          "is_new": true,
+          "sort_order": 60,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 210,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Biscoff Latte",
+          "description": null,
+          "is_new": true,
+          "sort_order": 70,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 310,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Hot Chocolate",
+          "description": null,
+          "is_new": false,
+          "sort_order": 80,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 240,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Matcha Latte",
+          "description": null,
+          "is_new": false,
+          "sort_order": 90,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 280,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Lemon Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 100,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 160,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Black Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 110,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 160,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Hibiscus Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 120,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 210,
+              "sort_order": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cold",
+      "name": "Cold Beverages & Refreshers",
+      "filter_label": "Cold Drinks",
+      "icon": "🧃",
+      "image_url": "/assets/Menu/SnapInsta.to_657312268_18074624918634821_9102992467512337151_n.jpg",
+      "is_compact": true,
+      "sort_order": 40,
+      "is_published": true,
+      "items": [
+        {
+          "name": "Virgin Elixir Mojito",
+          "description": null,
+          "is_new": false,
+          "sort_order": 10,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 190,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Lemon Cucumber Refresher",
+          "description": null,
+          "is_new": false,
+          "sort_order": 20,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 170,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Peach Iced Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 30,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 150,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Lemon Iced Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 40,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 150,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Mango Iced Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 50,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 150,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Iced Hibiscus Tea",
+          "description": null,
+          "is_new": false,
+          "sort_order": 60,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 180,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Soft Drinks",
+          "description": null,
+          "is_new": false,
+          "sort_order": 70,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 90,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Tiramisu Latte",
+          "description": null,
+          "is_new": true,
+          "sort_order": 80,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 280,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Biscoff Latte",
+          "description": null,
+          "is_new": true,
+          "sort_order": 90,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 310,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Cafe Caramello",
+          "description": null,
+          "is_new": false,
+          "sort_order": 100,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 210,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Iced Vanilla Latte",
+          "description": null,
+          "is_new": false,
+          "sort_order": 110,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 190,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Iced Cafe Latte",
+          "description": null,
+          "is_new": false,
+          "sort_order": 120,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 170,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Iced Americano",
+          "description": null,
+          "is_new": false,
+          "sort_order": 130,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 160,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Iced Mocha",
+          "description": null,
+          "is_new": true,
+          "sort_order": 140,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Standard",
+              "price": 190,
+              "sort_order": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "boba",
+      "name": "Boba Drinks",
+      "filter_label": "Boba",
+      "icon": "🧋",
+      "image_url": "/assets/Menu/SnapInsta.to_656906071_18074624906634821_2674842108829996519_n.jpg",
+      "is_compact": false,
+      "sort_order": 50,
+      "is_published": true,
+      "items": [
+        {
+          "name": "Strawberry Matcha Latte",
+          "description": "A perfect amalgamation of earthy and refreshing fruity notes.",
+          "is_new": false,
+          "sort_order": 10,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 250,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 300,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Mango Matcha Latte",
+          "description": "Rich mango and earthy matcha in a refreshing cold latte.",
+          "is_new": false,
+          "sort_order": 20,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 250,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 300,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Strawberry Rush",
+          "description": "Rich strawberry milk served cold, topped with creamy strawberry cool whip.",
+          "is_new": false,
+          "sort_order": 30,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 210,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 260,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "By the Bay",
+          "description": "Creamy latte of butterfly pea tea and espresso.",
+          "is_new": false,
+          "sort_order": 40,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 210,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 260,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Cocoa",
+          "description": "Perfectly sweetened chocolate milk topped with cocoa cream.",
+          "is_new": false,
+          "sort_order": 50,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 210,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 260,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Chai Latté",
+          "description": "Tea-based latte, warm and comforting.",
+          "is_new": false,
+          "sort_order": 60,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 180,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 230,
+              "sort_order": 20
+            }
+          ]
+        },
+        {
+          "name": "Brown Sugar",
+          "description": "Decadent sweet caramel milk-based drink with chewy tapioca pearls.",
+          "is_new": false,
+          "sort_order": 70,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "With Boba",
+              "price": 230,
+              "sort_order": 10
+            }
+          ]
+        },
+        {
+          "name": "Matcha Latté",
+          "description": "Made using shade-grown green tea powder whisked into a creamy latte.",
+          "is_new": false,
+          "sort_order": 80,
+          "is_published": true,
+          "variants": [
+            {
+              "label": "Without Boba",
+              "price": 240,
+              "sort_order": 10
+            },
+            {
+              "label": "With Boba",
+              "price": 290,
+              "sort_order": 20
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "addOns": [
+    {
+      "name": "Kimchi",
+      "price": 50,
+      "sort_order": 10,
+      "is_published": true
+    },
+    {
+      "name": "Cheese",
+      "price": 40,
+      "sort_order": 20,
+      "is_published": true
+    },
+    {
+      "name": "Chilli Oil",
+      "price": 20,
+      "sort_order": 30,
+      "is_published": true
+    },
+    {
+      "name": "Egg",
+      "price": 30,
+      "sort_order": 40,
+      "is_published": true
+    },
+    {
+      "name": "Crispy Chicken",
+      "price": 150,
+      "sort_order": 50,
+      "is_published": true
+    },
+    {
+      "name": "Onigiri Rice Ball",
+      "price": 80,
+      "sort_order": 60,
+      "is_published": true
+    },
+    {
+      "name": "Cheese Sauce",
+      "price": 60,
+      "sort_order": 70,
+      "is_published": true
+    }
+  ],
+  "menuGallery": [
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_657361529_18074624954634821_2762118125821715897_n.jpg",
+      "label": "Appetizers",
+      "sort_order": 10,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_657718400_18074624915634821_8389278748129045694_n.jpg",
+      "label": "Mains & Bowls",
+      "sort_order": 20,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_657347414_18074624927634821_5842886881784906437_n.jpg",
+      "label": "Hot Beverages",
+      "sort_order": 30,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_657312268_18074624918634821_9102992467512337151_n.jpg",
+      "label": "Cold Beverages",
+      "sort_order": 40,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_656906071_18074624906634821_2674842108829996519_n.jpg",
+      "label": "Boba Drinks",
+      "sort_order": 50,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_657363241_18074624945634821_2396601562733461693_n.jpg",
+      "label": "Chicken Wings & Tempura",
+      "sort_order": 60,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_657931010_18074624936634821_657350650141812241_n.jpg",
+      "label": "Japanese Katsu",
+      "sort_order": 70,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_658341642_18074624891634821_3999858514850156986_n.jpg",
+      "label": "Korean Tteokbokki",
+      "sort_order": 80,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_658845431_18074624870634821_8119804553295390615_n.jpg",
+      "label": "Bento Box",
+      "sort_order": 90,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Menu/SnapInsta.to_659036926_18074624882634821_2388904814950615653_n.jpg",
+      "label": "Dolsot Bibimbap",
+      "sort_order": 100,
+      "is_published": true
+    }
+  ],
+  "highlights": [
+    {
+      "image_url": "/assets/Food/Screenshot_20260619_144900.jpg",
+      "badge": "Signature",
+      "category": "Signature",
+      "title": "Signature Spread",
+      "description": "Experience the best of Bite & Beans with a feast featuring our fan-favorite bentos, ramen, and crispy wings.",
+      "price_label": "Explore the Menu",
+      "sort_order": 10,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Food/Screenshot_20260619_144911.jpg",
+      "badge": "Best Seller",
+      "category": "Bento",
+      "title": "Premium Bento",
+      "description": "A Japanese-style bento box featuring two furikake rice balls, crispy katsu, and a gravy of your choice of protein, all served alongside a refreshing salad and flavorful umami kimchi.",
+      "price_label": "From Rs. 450",
+      "sort_order": 20,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Food/Screenshot_20260619_144922.jpg",
+      "badge": "Comfort Food",
+      "category": "Dumplings",
+      "title": "Jumbo Pink Mandu",
+      "description": "Savour our scrumptious Jumbo momos, infused with vibrant beetroot and filled with a juicy, tender center. These delightful treats come with our in-house peanut dip and chilli oil for an extra umami.",
+      "price_label": "From Rs. 240",
+      "sort_order": 30,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Food/Screenshot_20260619_144943.jpg",
+      "badge": "Must Try",
+      "category": "Katsu",
+      "title": "Japanese Katsu",
+      "description": "Crispy golden-brown cutlet coated in fluffy Japanese panko, served with house-made mayo and cabbage coleslaw.",
+      "price_label": "From Rs. 290",
+      "sort_order": 40,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Food/Screenshot_20260619_144951.jpg",
+      "badge": "Korean Classic",
+      "category": "Fried Rice",
+      "title": "Kimchi Fried Rice",
+      "description": "The dish combines spicy, tangy, savory, and slightly sweet flavors. Fermented kimchi adds tanginess, while gochujang and soy sauce boost spiciness and umami.",
+      "price_label": "From Rs. 280",
+      "sort_order": 50,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Food/Screenshot_20260619_145001.jpg",
+      "badge": "Cafe",
+      "category": "Beverages",
+      "title": "Classic Cappuccino",
+      "description": "A rich and comforting cup of expertly brewed coffee topped with silky steamed milk and beautiful latte art.",
+      "price_label": "From Rs. 160",
+      "sort_order": 60,
+      "is_published": true
+    }
+  ],
+  "experiencePhotos": [
+    {
+      "image_url": "/assets/Infrastructure/Screenshot_20260619_144836.jpg",
+      "title": "The Grand Hall",
+      "description": "Monochrome interiors with hand-drawn wall art and reflective glass tables",
+      "is_featured_home": false,
+      "home_title": null,
+      "home_description": null,
+      "home_sort_order": 0,
+      "sort_order": 10,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Infrastructure/Screenshot_20260619_144847.jpg",
+      "title": "Garden Seating",
+      "description": "Outdoor charm with 2D sketch panels, fairy lights, and floral accents",
+      "is_featured_home": true,
+      "home_title": "Garden Seating",
+      "home_description": "Outdoor charm under the stars",
+      "home_sort_order": 30,
+      "sort_order": 20,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Infrastructure/Screenshot_20260619_144933.jpg",
+      "title": "The Chandelier Room",
+      "description": "Ornate ceiling details, soft lighting, and storybook ambiance",
+      "is_featured_home": true,
+      "home_title": "The Chandelier Room",
+      "home_description": "Storybook lighting and ornate ceilings",
+      "home_sort_order": 10,
+      "sort_order": 30,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Infrastructure/Screenshot_20260619_145008.jpg",
+      "title": "Hand-Drawn Details",
+      "description": "Every surface is a canvas — windows, doors, and decor in ink",
+      "is_featured_home": true,
+      "home_title": "Hand-Drawn Details",
+      "home_description": "Windows, doors, and decor in ink",
+      "home_sort_order": 20,
+      "sort_order": 40,
+      "is_published": true
+    },
+    {
+      "image_url": "/assets/Infrastructure/Screenshot_20260619_145024.jpg",
+      "title": "Welcome In",
+      "description": "The bubble-letter sign that started it all — your portal to the 2D world",
+      "is_featured_home": false,
+      "home_title": null,
+      "home_description": null,
+      "home_sort_order": 0,
+      "sort_order": 50,
+      "is_published": true
+    }
+  ],
+  "amenities": [
+    {
+      "name": "Dog Friendly",
+      "icon_url": "/assets/Features/dog_friendly.png",
+      "show_on_home": true,
+      "home_sort_order": 20,
+      "sort_order": 10,
+      "is_published": true
+    },
+    {
+      "name": "Instagrammable",
+      "icon_url": "/assets/Features/instagrammable.png",
+      "show_on_home": true,
+      "home_sort_order": 10,
+      "sort_order": 20,
+      "is_published": true
+    },
+    {
+      "name": "Vegan Options",
+      "icon_url": "/assets/Features/vegan_options.png",
+      "show_on_home": true,
+      "home_sort_order": 30,
+      "sort_order": 30,
+      "is_published": true
+    },
+    {
+      "name": "Halal Food",
+      "icon_url": "/assets/Features/halal_food.png",
+      "show_on_home": true,
+      "home_sort_order": 40,
+      "sort_order": 40,
+      "is_published": true
+    },
+    {
+      "name": "Free Parking",
+      "icon_url": "/assets/Features/free_parking.png",
+      "show_on_home": false,
+      "home_sort_order": 0,
+      "sort_order": 50,
+      "is_published": true
+    },
+    {
+      "name": "Paid Wi-Fi",
+      "icon_url": "/assets/Features/paid_wifi.png",
+      "show_on_home": false,
+      "home_sort_order": 0,
+      "sort_order": 60,
+      "is_published": true
+    }
+  ]
+}
