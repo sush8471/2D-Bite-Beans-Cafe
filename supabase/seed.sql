@@ -1,0 +1,350 @@
+-- =========================================================
+-- Bite & Beans — seed data
+-- Generated from data/content.json by scripts/generate-seed.mjs.
+-- Run AFTER supabase/schema.sql. Safe to re-run (upserts by id/key).
+-- =========================================================
+
+do $$
+begin
+  if to_regclass('public.admin_users') is null
+     or to_regclass('public.site_settings') is null
+     or to_regclass('public.page_copy') is null
+     or to_regclass('public.menu_categories') is null
+     or to_regclass('public.menu_items') is null
+     or to_regclass('public.menu_item_variants') is null
+     or to_regclass('public.add_ons') is null
+     or to_regclass('public.menu_gallery') is null
+     or to_regclass('public.highlights') is null
+     or to_regclass('public.experience_photos') is null
+     or to_regclass('public.amenities') is null
+  then
+    raise exception 'Schema incomplete. Run supabase/schema.sql (or supabase/setup.sql) in this same project first.';
+  end if;
+end;
+$$;
+
+insert into public.site_settings (id, brand_name, logo_url, hero_image_url, visit_image_url, snapshot_image_url, address, maps_url, hours_days, hours_time, phone, whatsapp_number, instagram_handle, instagram_url, average_spend, meta_title, meta_description, theme_color)
+values
+  (1, 'Bite & Beans', '/assets/Logo/Gemini_Generated_Image_pejfj1pejfj1pejf.png', '/assets/Infrastructure/Screenshot_20260619_144933.jpg', '/assets/Infrastructure/Screenshot_20260619_145037.jpg', '/assets/Infrastructure/Screenshot_20260619_145024.jpg', 'Rajgarh Rd, Sarania Hills, Guwahati, Assam 781003', 'https://www.google.com/maps/search/?api=1&query=Bite+%26+Beans+Sarania+Hills+Guwahati', 'Monday — Sunday', '12:00 PM — 10:00 PM', '060004 87453', '918135972387', '@biteandbeanss', 'https://instagram.com/biteandbeanss', 'Rs. 200 — 400', 'Bite & Beans — 2D Cafe House | Guwahati', 'Bite & Beans 2D Cafe House — Guwahati''s first 2D-themed cafe. Step into a sketchbook of Korean & Japanese comfort food, boba, and specialty coffee.', '#8B2635')
+on conflict (id) do update set
+    brand_name = excluded.brand_name,
+    logo_url = excluded.logo_url,
+    hero_image_url = excluded.hero_image_url,
+    visit_image_url = excluded.visit_image_url,
+    snapshot_image_url = excluded.snapshot_image_url,
+    address = excluded.address,
+    maps_url = excluded.maps_url,
+    hours_days = excluded.hours_days,
+    hours_time = excluded.hours_time,
+    phone = excluded.phone,
+    whatsapp_number = excluded.whatsapp_number,
+    instagram_handle = excluded.instagram_handle,
+    instagram_url = excluded.instagram_url,
+    average_spend = excluded.average_spend,
+    meta_title = excluded.meta_title,
+    meta_description = excluded.meta_description,
+    theme_color = excluded.theme_color;
+
+insert into public.page_copy (key, page, label, value, multiline, sort_order)
+values
+  ('home.hero.title', 'home', 'Hero title', 'Guwahati''s First & Only 2D Cafe', false, 10),
+  ('home.hero.subtitle', 'home', 'Hero subtitle', 'Where every corner feels like a sketchbook come to life', false, 20),
+  ('home.space.label', 'home', 'Space label', 'The Space', false, 30),
+  ('home.space.title', 'home', 'Space title', 'Step Into a Sketchbook', false, 40),
+  ('home.space.body', 'home', 'Space description', 'Monochrome walls, ink-style furniture, and surreal comic-book aesthetics await around every corner.', true, 50),
+  ('home.highlights.label', 'home', 'Highlights label', 'Fan Favourites', false, 60),
+  ('home.highlights.title', 'home', 'Highlights title', 'Menu Highlights', false, 70),
+  ('home.vibe.label', 'home', 'Features label', 'Why You''ll Love Us', false, 80),
+  ('home.visit.title', 'home', 'Visit card title', 'Visit Us', false, 90),
+  ('menu.header.label', 'menu', 'Page label', 'Taste the Art', false, 10),
+  ('menu.header.title', 'menu', 'Page title', 'Our Menu', false, 20),
+  ('menu.header.body', 'menu', 'Page description', 'Korean & Japanese comfort food, boba creations, and specialty coffee', true, 30),
+  ('menu.addons.title', 'menu', 'Add-ons title', 'Add-Ons', false, 40),
+  ('menu.addons.subtitle', 'menu', 'Add-ons subtitle', 'Customise any dish to your taste', false, 50),
+  ('menu.cta.title', 'menu', 'CTA title', 'Hungry? Let''s Make It Happen.', false, 60),
+  ('menu.cta.body', 'menu', 'CTA description', 'Reserve your table or place an order on WhatsApp', false, 70),
+  ('experience.header.label', 'experience', 'Page label', 'Inside the Sketchbook', false, 10),
+  ('experience.header.title', 'experience', 'Page title', 'The 2D Experience', false, 20),
+  ('experience.header.body', 'experience', 'Page description', 'Every wall, chair, and detail is designed to make you feel like you''ve stepped inside a drawing', true, 30),
+  ('visit.header.label', 'visit', 'Page label', 'Find Us', false, 10),
+  ('visit.header.title', 'visit', 'Page title', 'Plan Your Visit', false, 20),
+  ('visit.header.body', 'visit', 'Page description', 'We''re waiting with a warm bowl and a sketchbook backdrop', true, 30),
+  ('visit.amenities.title', 'visit', 'Amenities title', 'Amenities', false, 40),
+  ('visit.cta.title', 'visit', 'CTA title', 'Ready to Step Into the Sketch?', false, 50),
+  ('visit.cta.body', 'visit', 'CTA description', 'Reservations recommended during peak hours', false, 60),
+  ('global.cta.explore_menu', 'global', 'Hero button', 'Explore Menu', false, 10),
+  ('global.cta.view_menu', 'global', 'View full menu button', 'View Full Menu', false, 20),
+  ('global.cta.see_gallery', 'global', 'See gallery button', 'See Full Gallery', false, 30),
+  ('global.cta.reserve', 'global', 'WhatsApp button', 'Reserve on WhatsApp', false, 40),
+  ('global.cta.plan_visit', 'global', 'Plan visit button', 'Plan Your Visit', false, 50),
+  ('global.cta.call', 'global', 'Call button', 'Call Us', false, 60)
+on conflict (key) do update set
+    page = excluded.page,
+    label = excluded.label,
+    value = excluded.value,
+    multiline = excluded.multiline,
+    sort_order = excluded.sort_order;
+
+insert into public.menu_categories (id, slug, name, filter_label, icon, image_url, is_compact, sort_order, is_published)
+values
+  ('630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'appetizers', 'Appetizers & Street Food', 'Appetizers', '🍗', '/assets/Menu/SnapInsta.to_657361529_18074624954634821_2762118125821715897_n.jpg', false, 10, true),
+  ('480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'mains', 'Mains & Bowls', 'Mains', '🍜', '/assets/Menu/SnapInsta.to_657718400_18074624915634821_8389278748129045694_n.jpg', false, 20, true),
+  ('9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'hot', 'Hot Beverages', 'Hot Drinks', '☕️', '/assets/Menu/SnapInsta.to_657347414_18074624927634821_5842886881784906437_n.jpg', true, 30, true),
+  ('12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'cold', 'Cold Beverages & Refreshers', 'Cold Drinks', '🧃', '/assets/Menu/SnapInsta.to_657312268_18074624918634821_9102992467512337151_n.jpg', true, 40, true),
+  ('1f99c26b-939f-58f4-ae8c-b31fb5258989', 'boba', 'Boba Drinks', 'Boba', '🧋', '/assets/Menu/SnapInsta.to_656906071_18074624906634821_2674842108829996519_n.jpg', false, 50, true)
+on conflict (id) do update set
+    slug = excluded.slug,
+    name = excluded.name,
+    filter_label = excluded.filter_label,
+    icon = excluded.icon,
+    image_url = excluded.image_url,
+    is_compact = excluded.is_compact,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
+
+insert into public.menu_items (id, category_id, name, description, is_new, sort_order, is_published)
+values
+  ('e351af3f-6929-5ec3-aa98-fe3218b1fb8a', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Twigim Chicken', 'Succulent golden-fried chicken coated in a tantalizing sweet and spicy garlic glaze.', false, 10, true),
+  ('d426eb8c-e335-5c8f-a7b5-cf426cb0446a', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Chicken Wing Tempura', 'Japanese-style chicken wings, expertly fried to a crispy exterior with a juicy interior, seasoned with our signature spice blend.', false, 20, true),
+  ('2021dfd1-f637-514a-9ce1-c9ba8bfe4960', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Buldak Chicken Wings', 'Crispy chicken wings, bursting with fiery heat, generously coated in irresistibly spicy buldak sauce.', false, 30, true),
+  ('b8e6055f-0feb-577f-a8cc-baf1327a499f', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Shrimp Tempura', 'A delicate, crispy tempura with a mild savory flavor, served with fresh salad and house-made mayo.', false, 40, true),
+  ('dd3a4bcf-5908-5beb-9a91-5f3d52ae4568', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Korean Corndog', 'A hot dog coated in crispy deep-fried batter, served with your choice of toppings.', false, 50, true),
+  ('9c36fe4a-646b-5bf2-83e2-63f16f925aa8', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Jumbo Pink Mandu', 'Jumbo momos infused with vibrant beetroot and a juicy tender center. Served with in-house peanut dip and chilli oil.', false, 60, true),
+  ('0d9b58b5-30c9-5807-bab1-8cf6b0311960', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Korean Tteokbokki', 'Korean rice cakes in a sweet and spicy sauce, garnished with your choice of toppings.', false, 70, true),
+  ('d05ed3c7-5a63-5c82-b30d-9fdeeec65513', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Korean Rakbokki', 'A delicious blend of ramen and soft Korean rice cakes in a sweet and spicy broth.', false, 80, true),
+  ('93ef8e0b-fd75-52ad-9322-2dc0d936e6da', '630f2622-0505-56c8-bcf9-8d7c1cc12d95', 'Cucumber Banchan', 'Tangy spicy Korean Cucumber Salad (Oi Muchim) — crunchy, cool, and refreshing.', false, 90, true),
+  ('1ef78d43-cc80-5d9a-bc7e-5ab6e6cf2e5d', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Soo.... Ramen-tic', 'A renowned noodle dish from Korea and Japan, brought to life with our signature spicy broth. Select your desired spice level.', false, 10, true),
+  ('46628e92-66f3-5a04-a439-7361fd5ceaf6', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Kimchi Ramyun', 'A hearty noodle soup brimming with sweet and sour umami flavors, ideal to elevate your spirits.', false, 20, true),
+  ('53668663-3f28-5bff-a6c8-7ba3b0bb5733', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Japanese Katsu', 'Crispy golden-brown cutlet coated in fluffy Japanese panko, served with house-made mayo and cabbage coleslaw.', false, 30, true),
+  ('78b57623-14a1-5287-a772-2e8bbd64b666', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Buldak Jajangmyeon', 'Korean noodle dish topped with a thick sauce made of chunjang, diced pork, and vegetables.', false, 40, true),
+  ('2b802d18-167f-5731-bed9-eaafde46a8ca', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Dolsot Bibimbaap', 'A hot bowl of rice with individually prepared seasoned vegetables and a choice of protein. Bibim means mixing, bap is cooked rice.', false, 50, true),
+  ('fc5b76d4-1918-589a-809f-0c50bc801a27', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Kimchi Fried Rice', 'Spicy, tangy, savory, and slightly sweet. Fermented kimchi, gochujang, and soy sauce create an umami-rich combination.', false, 60, true),
+  ('3810e89e-5904-5d8b-83c9-05419bca20a9', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Mini Bento', 'Steamed rice with our signature in-house furikake seasoning, paired with your choice of protein and gravy.', false, 70, true),
+  ('8c6feba3-2682-5c7a-bbf2-96270f6530bd', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Premium Bento', 'Two furikake rice balls, crispy katsu, and your choice of protein gravy, served with refreshing salad and umami kimchi.', false, 80, true),
+  ('213810fa-9e89-520b-81f1-2835751eecea', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Crispy Kimbap', 'Rice, a variety of vegetables, and your choice of protein, all wrapped in crispy seaweed.', false, 90, true),
+  ('9fbbaf4a-57d9-59b8-a432-23ca6756af83', '480c30be-1f3f-5a5c-9e1c-f7c9ed14d49b', 'Korean Kimbap', 'Rice, a variety of vegetables, and your choice of protein, all wrapped in seaweed.', false, 100, true),
+  ('1eed7295-6a85-5294-81d0-1c648409e46a', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Espresso', null, false, 10, true),
+  ('9c97b8b6-0f7d-5994-890e-d3691b170f17', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Cappuccino', null, false, 20, true),
+  ('29575f1c-a124-5d3a-b8f4-fcbe74451813', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Americano', null, false, 30, true),
+  ('a53d4aa4-40dd-529e-a2c7-fa25506cb8a0', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Mocha', null, false, 40, true),
+  ('6ec02651-141a-537d-ac36-f2e75954d363', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Vanilla Latte', null, false, 50, true),
+  ('da304ade-0ec6-5853-a6a9-c0a8f3413c63', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Cinnamon Latte', null, true, 60, true),
+  ('ce3aa5e0-363f-51ac-927f-60a1e166747e', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Biscoff Latte', null, true, 70, true),
+  ('6333c84b-d51d-5f9c-8487-67cf30f904e6', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Hot Chocolate', null, false, 80, true),
+  ('7f003727-a86f-578f-a562-649d36eadc23', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Matcha Latte', null, false, 90, true),
+  ('0b5bc002-9c26-5a43-a713-d40148ae5f5c', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Lemon Tea', null, false, 100, true),
+  ('a5492e0f-09d5-5fc2-96ff-f55d44381753', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Black Tea', null, false, 110, true),
+  ('88242540-7c81-5a45-a8bf-612263c39513', '9079ca05-b9cb-58af-b9fd-a5a9475b367c', 'Hibiscus Tea', null, false, 120, true),
+  ('8211c959-f0f7-53eb-8799-754af647f1fe', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Virgin Elixir Mojito', null, false, 10, true),
+  ('45cba485-e57d-5cfd-9c5e-defd40c9172a', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Lemon Cucumber Refresher', null, false, 20, true),
+  ('53eff017-b97f-5493-b9ba-f0ea7b6e8387', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Peach Iced Tea', null, false, 30, true),
+  ('f4b81d2e-6753-5321-94d7-ee49f5b62255', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Lemon Iced Tea', null, false, 40, true),
+  ('dc982ee7-24a1-5c41-8a0f-842ed85ff136', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Mango Iced Tea', null, false, 50, true),
+  ('385edbab-7c6a-500a-b4be-c87260068980', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Iced Hibiscus Tea', null, false, 60, true),
+  ('0b9f60f9-7e0c-5cd9-ad6c-2b172ba71084', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Soft Drinks', null, false, 70, true),
+  ('80fb15dd-8560-5eca-ab04-2a4a52fb5e84', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Tiramisu Latte', null, true, 80, true),
+  ('c099711c-8f87-5d0a-af26-5e8e047cb384', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Biscoff Latte', null, true, 90, true),
+  ('7227bc14-bcfb-59f2-af3d-56227ea703a7', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Cafe Caramello', null, false, 100, true),
+  ('059b5612-355f-5483-ba01-fb41a046c72e', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Iced Vanilla Latte', null, false, 110, true),
+  ('bebba8cc-04fe-5268-871a-46390f40738b', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Iced Cafe Latte', null, false, 120, true),
+  ('aad8b78b-ae8f-5803-9a85-152612830760', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Iced Americano', null, false, 130, true),
+  ('6d32c3d3-c874-58d2-a924-f3b1144a1671', '12d2fc24-494b-51d7-b9c4-1ea3fe671f1f', 'Iced Mocha', null, true, 140, true),
+  ('2928489e-a1b8-5271-bcf7-ce1584b0bdec', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Strawberry Matcha Latte', 'A perfect amalgamation of earthy and refreshing fruity notes.', false, 10, true),
+  ('a85609a9-4485-50bf-ab3c-57c2cbea5c44', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Mango Matcha Latte', 'Rich mango and earthy matcha in a refreshing cold latte.', false, 20, true),
+  ('6eba4e42-0730-53d3-900e-8152af02f32c', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Strawberry Rush', 'Rich strawberry milk served cold, topped with creamy strawberry cool whip.', false, 30, true),
+  ('4f21fe98-f722-5e73-ac1b-86bfb07c49f9', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'By the Bay', 'Creamy latte of butterfly pea tea and espresso.', false, 40, true),
+  ('a42ff543-530f-5aa9-b046-fa0c7f8e0cdd', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Cocoa', 'Perfectly sweetened chocolate milk topped with cocoa cream.', false, 50, true),
+  ('81f431d3-320b-5e69-8485-3d509ca18aae', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Chai Latté', 'Tea-based latte, warm and comforting.', false, 60, true),
+  ('94bb7302-9030-5efb-b451-509bc44aeadd', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Brown Sugar', 'Decadent sweet caramel milk-based drink with chewy tapioca pearls.', false, 70, true),
+  ('6e7f5a44-4e9d-5fa6-b86b-a6a6ed987875', '1f99c26b-939f-58f4-ae8c-b31fb5258989', 'Matcha Latté', 'Made using shade-grown green tea powder whisked into a creamy latte.', false, 80, true)
+on conflict (id) do update set
+    category_id = excluded.category_id,
+    name = excluded.name,
+    description = excluded.description,
+    is_new = excluded.is_new,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
+
+insert into public.menu_item_variants (id, item_id, label, price, sort_order)
+values
+  ('6601781f-58d6-5287-adcf-c87f3345f8c3', 'e351af3f-6929-5ec3-aa98-fe3218b1fb8a', 'Chicken', 390, 10),
+  ('1285e57c-af9b-50a4-b846-f333ced8f706', 'd426eb8c-e335-5c8f-a7b5-cf426cb0446a', 'Standard', 400, 10),
+  ('ca06aaa1-be97-5e8f-b43e-cb128af9888d', '2021dfd1-f637-514a-9ce1-c9ba8bfe4960', 'Hot wings', 430, 10),
+  ('045639ec-f44e-51b4-a87d-605345818c7b', '2021dfd1-f637-514a-9ce1-c9ba8bfe4960', '2x Hot wings', 440, 20),
+  ('ee80040e-755b-559b-a305-e3a9503ead2d', '2021dfd1-f637-514a-9ce1-c9ba8bfe4960', 'Hot wings + Cheese', 450, 30),
+  ('69ad6bf1-7cd4-5505-8f41-ec85998a4312', '2021dfd1-f637-514a-9ce1-c9ba8bfe4960', '2x Hot wings + Cheese', 460, 40),
+  ('92700955-256d-5a86-a127-f193550768fe', 'b8e6055f-0feb-577f-a8cc-baf1327a499f', 'Standard', 400, 10),
+  ('45559dde-4595-559a-9485-820d90c79234', 'dd3a4bcf-5908-5beb-9a91-5f3d52ae4568', 'Chicken sausage', 240, 10),
+  ('88850058-ece7-5d5e-a0d6-3d8dca89acf1', 'dd3a4bcf-5908-5beb-9a91-5f3d52ae4568', 'Classic cheese', 240, 20),
+  ('8a54b14f-7b11-5fa4-b0cf-87861c0e0e95', 'dd3a4bcf-5908-5beb-9a91-5f3d52ae4568', 'Sausage Cheese', 280, 30),
+  ('cf87ad8a-2bb3-561d-977c-d905a4703ecf', 'dd3a4bcf-5908-5beb-9a91-5f3d52ae4568', 'Potato Cheese', 280, 40),
+  ('f198e6bc-a598-5cb6-8e18-7588878b9a9c', '9c36fe4a-646b-5bf2-83e2-63f16f925aa8', 'Chicken', 240, 10),
+  ('6aa69f0e-2d9e-5377-b30d-77e97a54d009', '0d9b58b5-30c9-5807-bab1-8cf6b0311960', 'Vegan', 400, 10),
+  ('3998cd88-7c48-5d89-bca2-be05f2fac84e', '0d9b58b5-30c9-5807-bab1-8cf6b0311960', 'Cheese', 440, 20),
+  ('fbea223a-423e-5445-b45b-0119bb6a16e4', '0d9b58b5-30c9-5807-bab1-8cf6b0311960', 'Chicken', 460, 30),
+  ('7c39632b-78c6-567e-83bc-d069dcd8ba8d', 'd05ed3c7-5a63-5c82-b30d-9fdeeec65513', 'Vegan', 390, 10),
+  ('a3237993-51f2-547a-bb83-18428fa463e6', 'd05ed3c7-5a63-5c82-b30d-9fdeeec65513', 'Cheese', 400, 20),
+  ('2351081b-5c21-56e4-b42d-34ad39d6ad48', 'd05ed3c7-5a63-5c82-b30d-9fdeeec65513', 'Chicken', 410, 30),
+  ('6eddaa42-e76c-57ae-bd2f-f8dafebda863', '93ef8e0b-fd75-52ad-9322-2dc0d936e6da', 'Vegan', 240, 10),
+  ('4f95f3f7-9404-5e64-8b43-f3a944624758', '1ef78d43-cc80-5d9a-bc7e-5ab6e6cf2e5d', 'Vegan', 280, 10),
+  ('18512d24-d563-5a4a-b4d5-899908c9610b', '1ef78d43-cc80-5d9a-bc7e-5ab6e6cf2e5d', 'Chicken', 310, 20),
+  ('d9c1471d-9c0e-5ddc-b553-1ef17f1b471b', '1ef78d43-cc80-5d9a-bc7e-5ab6e6cf2e5d', 'Seafood', 410, 30),
+  ('c6111fc0-f165-5731-a557-60a38fb3844e', '1ef78d43-cc80-5d9a-bc7e-5ab6e6cf2e5d', 'Mixed', 450, 40),
+  ('82a73ddc-dbb7-539c-b2b2-f024f63e2127', '46628e92-66f3-5a04-a439-7361fd5ceaf6', 'Vegan', 300, 10),
+  ('9e7239b7-5c84-59ec-9870-37432855dd09', '46628e92-66f3-5a04-a439-7361fd5ceaf6', 'Chicken', 340, 20),
+  ('dfcd2abe-b798-5da2-a117-86772e444da8', '46628e92-66f3-5a04-a439-7361fd5ceaf6', 'Seafood', 440, 30),
+  ('a3e4a072-6e86-5845-a881-0273b38121c1', '46628e92-66f3-5a04-a439-7361fd5ceaf6', 'Mixed', 450, 40),
+  ('8f1a42c9-435a-5f29-885b-f13142a3813d', '53668663-3f28-5bff-a6c8-7ba3b0bb5733', 'Tofu', 290, 10),
+  ('670cda41-3af0-5045-83a0-5b29cb403643', '53668663-3f28-5bff-a6c8-7ba3b0bb5733', 'Cottage Cheese', 290, 20),
+  ('cf62736c-5207-52c9-989e-f57e89aa99fa', '53668663-3f28-5bff-a6c8-7ba3b0bb5733', 'Chicken', 300, 30),
+  ('49844c6d-b0b8-563a-8e5b-79511696501e', '53668663-3f28-5bff-a6c8-7ba3b0bb5733', 'Fish', 380, 40),
+  ('2f8ba39b-b05b-5a8a-8186-eb13d42cc90f', '78b57623-14a1-5287-a772-2e8bbd64b666', 'Classic', 360, 10),
+  ('3d039b1a-6e54-5127-b60e-b277f1657217', '78b57623-14a1-5287-a772-2e8bbd64b666', 'Chicken', 380, 20),
+  ('1763cd06-36f4-57f7-b721-0342e9dacbdf', '2b802d18-167f-5731-bed9-eaafde46a8ca', 'Vegan', 390, 10),
+  ('ee26c0ac-6b29-55d4-92e8-a8d5c2c656b6', '2b802d18-167f-5731-bed9-eaafde46a8ca', 'Chicken', 400, 20),
+  ('152ba852-ec58-5179-aa05-700bc31cf279', 'fc5b76d4-1918-589a-809f-0c50bc801a27', 'Vegan', 280, 10),
+  ('826b7faf-a2b7-577a-88b6-fd2430956b6a', 'fc5b76d4-1918-589a-809f-0c50bc801a27', 'Chicken', 320, 20),
+  ('52ee03fe-2c55-540e-a171-f0b6648e2423', '3810e89e-5904-5d8b-83c9-05419bca20a9', 'Vegan/Veg', 260, 10),
+  ('1953c57e-02e1-58e7-9016-a05a1a82a9d0', '3810e89e-5904-5d8b-83c9-05419bca20a9', 'Chicken', 280, 20),
+  ('49bf0e95-0b2d-5a44-b60a-b8abfbeec5ac', '8c6feba3-2682-5c7a-bbf2-96270f6530bd', 'Veg/Vegan', 450, 10),
+  ('65a8675a-060e-5d99-a715-bf36d4371a75', '8c6feba3-2682-5c7a-bbf2-96270f6530bd', 'Chicken', 460, 20),
+  ('808c5e36-453d-53f5-af4f-6e7302453d2b', '8c6feba3-2682-5c7a-bbf2-96270f6530bd', 'Seafood', 510, 30),
+  ('68651e0d-eede-5c6e-a48c-d97aa09cb0ad', '8c6feba3-2682-5c7a-bbf2-96270f6530bd', 'Mixed', 560, 40),
+  ('5d4bd7e9-86b3-5b81-bba1-2eb6c0d792c8', '213810fa-9e89-520b-81f1-2835751eecea', 'Veg/Vegan', 370, 10),
+  ('09675253-ecb6-5da7-b2be-a61b7e5b15ff', '213810fa-9e89-520b-81f1-2835751eecea', 'Chicken', 390, 20),
+  ('6241e31e-6a28-5400-be1f-8407ec01a60c', '213810fa-9e89-520b-81f1-2835751eecea', 'Crispy Shrimp', 470, 30),
+  ('93f9e340-391d-5ba9-9f64-9c87079fea8e', '9fbbaf4a-57d9-59b8-a432-23ca6756af83', 'Veg/Vegan', 370, 10),
+  ('8997a034-8cfa-5ab1-9b80-0d2d53a2942a', '9fbbaf4a-57d9-59b8-a432-23ca6756af83', 'Egg', 360, 20),
+  ('5f1e1af4-a4d0-5602-b19d-551564c319f0', '9fbbaf4a-57d9-59b8-a432-23ca6756af83', 'Chicken', 380, 30),
+  ('518f2f5f-a836-55c7-8b74-9cd225eb0108', '9fbbaf4a-57d9-59b8-a432-23ca6756af83', 'Tuna', 470, 40),
+  ('e42f5632-4470-5c3f-b603-a0599b0efbba', '1eed7295-6a85-5294-81d0-1c648409e46a', 'Standard', 90, 10),
+  ('93afec1a-d2c1-541c-ab66-686ed1cd4976', '9c97b8b6-0f7d-5994-890e-d3691b170f17', 'Standard', 160, 10),
+  ('2f7ca2f3-3e5c-5182-814e-58bd1c61c794', '29575f1c-a124-5d3a-b8f4-fcbe74451813', 'Standard', 130, 10),
+  ('d3f03b58-470a-50f1-b62e-c973401d6aee', 'a53d4aa4-40dd-529e-a2c7-fa25506cb8a0', 'Standard', 190, 10),
+  ('dbeaccf1-9601-534b-a58d-afb6354ec302', '6ec02651-141a-537d-ac36-f2e75954d363', 'Standard', 190, 10),
+  ('85d3aaa7-7d17-513f-9478-c2e4dcf0877f', 'da304ade-0ec6-5853-a6a9-c0a8f3413c63', 'Standard', 210, 10),
+  ('e0afea29-3a2d-5ed4-abe5-67c42bc3584e', 'ce3aa5e0-363f-51ac-927f-60a1e166747e', 'Standard', 310, 10),
+  ('9ee500eb-8763-5117-be00-df1e7b0b54a8', '6333c84b-d51d-5f9c-8487-67cf30f904e6', 'Standard', 240, 10),
+  ('8a50b303-4fbb-5ae6-a13c-fd6d05cad844', '7f003727-a86f-578f-a562-649d36eadc23', 'Standard', 280, 10),
+  ('daa2efc1-c742-586a-8954-fed012aec3f7', '0b5bc002-9c26-5a43-a713-d40148ae5f5c', 'Standard', 160, 10),
+  ('5db33ec9-fbdc-5e0a-9cc1-93fa66d77ce6', 'a5492e0f-09d5-5fc2-96ff-f55d44381753', 'Standard', 160, 10),
+  ('da77ae66-aadd-59e0-af00-70c77b75509c', '88242540-7c81-5a45-a8bf-612263c39513', 'Standard', 210, 10),
+  ('14a10c9d-4152-5f0b-89c8-121379ea5d5e', '8211c959-f0f7-53eb-8799-754af647f1fe', 'Standard', 190, 10),
+  ('8bcb30a0-4fb4-59a4-b1c1-48b86167a49c', '45cba485-e57d-5cfd-9c5e-defd40c9172a', 'Standard', 170, 10),
+  ('c62fb466-f8bf-593e-9501-e32d7c00e0f8', '53eff017-b97f-5493-b9ba-f0ea7b6e8387', 'Standard', 150, 10),
+  ('17514bc7-ffef-55b9-a12a-c7c7f7befd59', 'f4b81d2e-6753-5321-94d7-ee49f5b62255', 'Standard', 150, 10),
+  ('68bb058d-5d00-58ad-9a7f-f06f61683d8e', 'dc982ee7-24a1-5c41-8a0f-842ed85ff136', 'Standard', 150, 10),
+  ('39175755-6e87-51c6-81ce-19252f3e5f30', '385edbab-7c6a-500a-b4be-c87260068980', 'Standard', 180, 10),
+  ('dcf87bdb-c2fa-5bfd-a0bc-945952cf2276', '0b9f60f9-7e0c-5cd9-ad6c-2b172ba71084', 'Standard', 90, 10),
+  ('bbff6dcc-9bd1-5f59-a4a4-406e0141746b', '80fb15dd-8560-5eca-ab04-2a4a52fb5e84', 'Standard', 280, 10),
+  ('54a58623-797e-556f-9d17-6477cba298d5', 'c099711c-8f87-5d0a-af26-5e8e047cb384', 'Standard', 310, 10),
+  ('53504cae-58f4-5e79-a62d-8e817d69ddd2', '7227bc14-bcfb-59f2-af3d-56227ea703a7', 'Standard', 210, 10),
+  ('6d6c069c-0ed6-58b5-bcb5-19947bb81c0b', '059b5612-355f-5483-ba01-fb41a046c72e', 'Standard', 190, 10),
+  ('7ad55e5a-7868-5f9f-8bd3-16fbad5e85e0', 'bebba8cc-04fe-5268-871a-46390f40738b', 'Standard', 170, 10),
+  ('224075f3-5804-5e82-80a1-06b7883abff1', 'aad8b78b-ae8f-5803-9a85-152612830760', 'Standard', 160, 10),
+  ('4673eb59-0bfc-59a8-8eee-c65cd3649645', '6d32c3d3-c874-58d2-a924-f3b1144a1671', 'Standard', 190, 10),
+  ('7cea2375-a4ef-5166-be87-e59961988542', '2928489e-a1b8-5271-bcf7-ce1584b0bdec', 'Without Boba', 250, 10),
+  ('a2ccedf1-4fb6-500a-af23-19b9cfd0f98d', '2928489e-a1b8-5271-bcf7-ce1584b0bdec', 'With Boba', 300, 20),
+  ('0b54e9dc-715f-5ef7-bd99-16a154326940', 'a85609a9-4485-50bf-ab3c-57c2cbea5c44', 'Without Boba', 250, 10),
+  ('8f7c6fe9-06be-5d9e-a939-8f3115952416', 'a85609a9-4485-50bf-ab3c-57c2cbea5c44', 'With Boba', 300, 20),
+  ('1ac3aaa1-f42a-550f-9469-dff87b169085', '6eba4e42-0730-53d3-900e-8152af02f32c', 'Without Boba', 210, 10),
+  ('251ed3e4-06e3-5b57-8651-e3f2c2e29ffd', '6eba4e42-0730-53d3-900e-8152af02f32c', 'With Boba', 260, 20),
+  ('1bd258e7-719e-527c-8b82-498b7a9d6a32', '4f21fe98-f722-5e73-ac1b-86bfb07c49f9', 'Without Boba', 210, 10),
+  ('cb5411c1-af8b-5cc0-a194-5898d77c4b4f', '4f21fe98-f722-5e73-ac1b-86bfb07c49f9', 'With Boba', 260, 20),
+  ('762d9418-983d-51e0-907c-ec4f9b656074', 'a42ff543-530f-5aa9-b046-fa0c7f8e0cdd', 'Without Boba', 210, 10),
+  ('1700ef8d-50af-54b7-88ca-7040421cfeb9', 'a42ff543-530f-5aa9-b046-fa0c7f8e0cdd', 'With Boba', 260, 20),
+  ('c2a5da35-ab6e-546f-b6f0-9585f159f8d8', '81f431d3-320b-5e69-8485-3d509ca18aae', 'Without Boba', 180, 10),
+  ('7578497e-fea7-5b38-b555-984086d09fae', '81f431d3-320b-5e69-8485-3d509ca18aae', 'With Boba', 230, 20),
+  ('d21af29a-8810-505c-b436-47bb642f1183', '94bb7302-9030-5efb-b451-509bc44aeadd', 'With Boba', 230, 10),
+  ('c434bb9b-f7da-5a98-9353-feb2872f8be6', '6e7f5a44-4e9d-5fa6-b86b-a6a6ed987875', 'Without Boba', 240, 10),
+  ('a30d7387-eda3-513b-8a22-afa682419cad', '6e7f5a44-4e9d-5fa6-b86b-a6a6ed987875', 'With Boba', 290, 20)
+on conflict (id) do update set
+    item_id = excluded.item_id,
+    label = excluded.label,
+    price = excluded.price,
+    sort_order = excluded.sort_order;
+
+insert into public.add_ons (id, name, price, sort_order, is_published)
+values
+  ('c52505d3-cb2b-5b91-b320-e0e617a3aa59', 'Kimchi', 50, 10, true),
+  ('95f03e4a-f5dc-534a-8866-c56881054b81', 'Cheese', 40, 20, true),
+  ('fbf70cd7-0a30-5af6-a6a2-3188a07e9c8d', 'Chilli Oil', 20, 30, true),
+  ('16413118-f6b6-50d2-973d-bea47be594b0', 'Egg', 30, 40, true),
+  ('4fca84d2-5eec-5a13-8052-abf9d38f6055', 'Crispy Chicken', 150, 50, true),
+  ('de59d470-6f76-51eb-876c-c6c658a4c94a', 'Onigiri Rice Ball', 80, 60, true),
+  ('51c7e92e-ec1d-51a6-9c29-8d83fe8e48c4', 'Cheese Sauce', 60, 70, true)
+on conflict (id) do update set
+    name = excluded.name,
+    price = excluded.price,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
+
+insert into public.menu_gallery (id, image_url, label, sort_order, is_published)
+values
+  ('50293446-c7b5-5e95-a0ea-c10f2ca8703f', '/assets/Menu/SnapInsta.to_657361529_18074624954634821_2762118125821715897_n.jpg', 'Appetizers', 10, true),
+  ('4abd5cd5-42d4-5024-9773-6f7b614ad87c', '/assets/Menu/SnapInsta.to_657718400_18074624915634821_8389278748129045694_n.jpg', 'Mains & Bowls', 20, true),
+  ('b278e3b6-1bf4-59a0-ae2d-61cea10ead9a', '/assets/Menu/SnapInsta.to_657347414_18074624927634821_5842886881784906437_n.jpg', 'Hot Beverages', 30, true),
+  ('1c7b078b-f212-595b-8fe3-5fbeac3c0a32', '/assets/Menu/SnapInsta.to_657312268_18074624918634821_9102992467512337151_n.jpg', 'Cold Beverages', 40, true),
+  ('c1c3e6cc-04d0-5337-a837-40e51cbba6f2', '/assets/Menu/SnapInsta.to_656906071_18074624906634821_2674842108829996519_n.jpg', 'Boba Drinks', 50, true),
+  ('e9a70290-dbf9-5f4d-8746-221376ce6843', '/assets/Menu/SnapInsta.to_657363241_18074624945634821_2396601562733461693_n.jpg', 'Chicken Wings & Tempura', 60, true),
+  ('13a9b86a-85b1-5ece-ac9c-3f7e47c44447', '/assets/Menu/SnapInsta.to_657931010_18074624936634821_657350650141812241_n.jpg', 'Japanese Katsu', 70, true),
+  ('d7318cc8-0387-5057-ac4d-5966147d08cf', '/assets/Menu/SnapInsta.to_658341642_18074624891634821_3999858514850156986_n.jpg', 'Korean Tteokbokki', 80, true),
+  ('9fbee903-5e10-54e0-be3e-7770718b4850', '/assets/Menu/SnapInsta.to_658845431_18074624870634821_8119804553295390615_n.jpg', 'Bento Box', 90, true),
+  ('08118f6c-d533-5d8d-abae-f5ca616c3552', '/assets/Menu/SnapInsta.to_659036926_18074624882634821_2388904814950615653_n.jpg', 'Dolsot Bibimbap', 100, true)
+on conflict (id) do update set
+    image_url = excluded.image_url,
+    label = excluded.label,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
+
+insert into public.highlights (id, image_url, badge, category, title, description, price_label, sort_order, is_published)
+values
+  ('5b1e4063-767b-5ae3-b418-f1f2e7c4720d', '/assets/Food/Screenshot_20260619_144900.jpg', 'Signature', 'Signature', 'Signature Spread', 'Experience the best of Bite & Beans with a feast featuring our fan-favorite bentos, ramen, and crispy wings.', 'Explore the Menu', 10, true),
+  ('16da5ae7-a23b-5019-b952-ab0bbdb88878', '/assets/Food/Screenshot_20260619_144911.jpg', 'Best Seller', 'Bento', 'Premium Bento', 'A Japanese-style bento box featuring two furikake rice balls, crispy katsu, and a gravy of your choice of protein, all served alongside a refreshing salad and flavorful umami kimchi.', 'From Rs. 450', 20, true),
+  ('63dbb274-11c8-5757-a9ff-cb2940043ee5', '/assets/Food/Screenshot_20260619_144922.jpg', 'Comfort Food', 'Dumplings', 'Jumbo Pink Mandu', 'Savour our scrumptious Jumbo momos, infused with vibrant beetroot and filled with a juicy, tender center. These delightful treats come with our in-house peanut dip and chilli oil for an extra umami.', 'From Rs. 240', 30, true),
+  ('0c1a9467-dcee-5cf2-b13d-d70c015af1d0', '/assets/Food/Screenshot_20260619_144943.jpg', 'Must Try', 'Katsu', 'Japanese Katsu', 'Crispy golden-brown cutlet coated in fluffy Japanese panko, served with house-made mayo and cabbage coleslaw.', 'From Rs. 290', 40, true),
+  ('d7c20a09-050a-5d3e-a2ff-409d8714eac1', '/assets/Food/Screenshot_20260619_144951.jpg', 'Korean Classic', 'Fried Rice', 'Kimchi Fried Rice', 'The dish combines spicy, tangy, savory, and slightly sweet flavors. Fermented kimchi adds tanginess, while gochujang and soy sauce boost spiciness and umami.', 'From Rs. 280', 50, true),
+  ('f3b17911-2e6b-50f7-ad8d-48f4b0d3fe2d', '/assets/Food/Screenshot_20260619_145001.jpg', 'Cafe', 'Beverages', 'Classic Cappuccino', 'A rich and comforting cup of expertly brewed coffee topped with silky steamed milk and beautiful latte art.', 'From Rs. 160', 60, true)
+on conflict (id) do update set
+    image_url = excluded.image_url,
+    badge = excluded.badge,
+    category = excluded.category,
+    title = excluded.title,
+    description = excluded.description,
+    price_label = excluded.price_label,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
+
+insert into public.experience_photos (id, image_url, title, description, is_featured_home, home_title, home_description, home_sort_order, sort_order, is_published)
+values
+  ('93436966-ca52-5c7f-a752-e53456684f21', '/assets/Infrastructure/Screenshot_20260619_144836.jpg', 'The Grand Hall', 'Monochrome interiors with hand-drawn wall art and reflective glass tables', false, null, null, 0, 10, true),
+  ('84f77ebc-9ffb-598a-8af1-411d9a6fd47d', '/assets/Infrastructure/Screenshot_20260619_144847.jpg', 'Garden Seating', 'Outdoor charm with 2D sketch panels, fairy lights, and floral accents', true, 'Garden Seating', 'Outdoor charm under the stars', 30, 20, true),
+  ('bc6c6037-f2b2-581a-92f6-191681693e15', '/assets/Infrastructure/Screenshot_20260619_144933.jpg', 'The Chandelier Room', 'Ornate ceiling details, soft lighting, and storybook ambiance', true, 'The Chandelier Room', 'Storybook lighting and ornate ceilings', 10, 30, true),
+  ('4067ac51-5728-5364-b2d4-2a22fd3237ec', '/assets/Infrastructure/Screenshot_20260619_145008.jpg', 'Hand-Drawn Details', 'Every surface is a canvas — windows, doors, and decor in ink', true, 'Hand-Drawn Details', 'Windows, doors, and decor in ink', 20, 40, true),
+  ('9f45aef1-cf1d-5d13-9cae-37951b819086', '/assets/Infrastructure/Screenshot_20260619_145024.jpg', 'Welcome In', 'The bubble-letter sign that started it all — your portal to the 2D world', false, null, null, 0, 50, true)
+on conflict (id) do update set
+    image_url = excluded.image_url,
+    title = excluded.title,
+    description = excluded.description,
+    is_featured_home = excluded.is_featured_home,
+    home_title = excluded.home_title,
+    home_description = excluded.home_description,
+    home_sort_order = excluded.home_sort_order,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
+
+insert into public.amenities (id, name, icon_url, show_on_home, home_sort_order, sort_order, is_published)
+values
+  ('b80ddb49-d4ca-528f-ae0c-b4ca866e21d3', 'Dog Friendly', '/assets/Features/dog_friendly.png', true, 20, 10, true),
+  ('ae77a6d7-c9ea-5798-96dd-b50c7f04e6fe', 'Instagrammable', '/assets/Features/instagrammable.png', true, 10, 20, true),
+  ('6bfd8bc5-7895-5689-8c10-e06739ff0257', 'Vegan Options', '/assets/Features/vegan_options.png', true, 30, 30, true),
+  ('7b110474-da32-5f45-a3bb-0e41ebe8b1d3', 'Halal Food', '/assets/Features/halal_food.png', true, 40, 40, true),
+  ('8e19afb0-119e-544c-a27f-af2b157e8898', 'Free Parking', '/assets/Features/free_parking.png', false, 0, 50, true),
+  ('35ba9b65-2428-57bf-a7a4-0b6f851a2e0c', 'Paid Wi-Fi', '/assets/Features/paid_wifi.png', false, 0, 60, true)
+on conflict (id) do update set
+    name = excluded.name,
+    icon_url = excluded.icon_url,
+    show_on_home = excluded.show_on_home,
+    home_sort_order = excluded.home_sort_order,
+    sort_order = excluded.sort_order,
+    is_published = excluded.is_published;
