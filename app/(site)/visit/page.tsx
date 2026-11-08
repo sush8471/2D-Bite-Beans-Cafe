@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import { copyText, getSiteContent, toCopyMap } from '@/lib/content';
-import { safeImageUrl, telHref, whatsappUrl } from '@/lib/utils';
+import { instagramHandleFromUrl, mapsSearchUrl, safeImageUrl, telHref, whatsappUrl } from '@/lib/utils';
 
 export const metadata = {
   title: 'Plan Your Visit',
@@ -13,6 +13,9 @@ export default async function VisitPage() {
   const content = await getSiteContent();
   const copy = toCopyMap(content);
   const { settings, amenities } = content;
+
+  const mapsHref = mapsSearchUrl(settings.address);
+  const instagramHandle = instagramHandleFromUrl(settings.instagram_url) || settings.instagram_handle;
 
   return (
     <section className="page visit-page" data-page="visit">
@@ -48,9 +51,9 @@ export default async function VisitPage() {
             <h3>Address</h3>
           </div>
           <p>{settings.address}</p>
-          {settings.maps_url ? (
+          {mapsHref ? (
             <p className="mt-1">
-              <a href={settings.maps_url} target="_blank" rel="noopener noreferrer">
+              <a href={mapsHref} target="_blank" rel="noopener noreferrer">
                 Open in Google Maps
               </a>
             </p>
@@ -93,9 +96,13 @@ export default async function VisitPage() {
           </p>
           <p>
             Instagram:{' '}
-            <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer">
-              {settings.instagram_handle}
-            </a>
+            {settings.instagram_url ? (
+              <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer">
+                {instagramHandle}
+              </a>
+            ) : (
+              instagramHandle
+            )}
           </p>
         </article>
 

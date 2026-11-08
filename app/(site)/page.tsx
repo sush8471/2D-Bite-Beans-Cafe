@@ -12,12 +12,12 @@ export default async function HomePage() {
 
   const homePhotos = experiencePhotos
     .filter((photo) => photo.is_featured_home)
-    .sort((a, b) => a.home_sort_order - b.home_sort_order)
+    .sort((a, b) => a.sort_order - b.sort_order)
     .slice(0, 3);
 
   const homeAmenities = amenities
     .filter((amenity) => amenity.show_on_home)
-    .sort((a, b) => a.home_sort_order - b.home_sort_order);
+    .sort((a, b) => a.sort_order - b.sort_order);
 
   return (
     <section className="page home-page" data-page="home">
@@ -73,11 +73,11 @@ export default async function HomePage() {
               >
                 <SiteImage
                   src={safeImageUrl(photo.image_url)}
-                  alt={photo.home_title || photo.title}
+                  alt={photo.title}
                 />
                 <figcaption className="experience-teaser__caption">
-                  <h3>{photo.home_title || photo.title}</h3>
-                  <p>{photo.home_description || photo.description}</p>
+                  <h3>{photo.title}</h3>
+                  <p>{photo.description}</p>
                 </figcaption>
               </figure>
             ))}
