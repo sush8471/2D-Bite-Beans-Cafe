@@ -108,19 +108,21 @@ bucket manually instead, make sure it is **public** and has these policies:
 | Admin page | Content |
 |---|---|
 | Dashboard | Counts, quick links, setup status |
-| Menu | Categories, dishes, descriptions, “new” badges, and all price variants |
+| Menu | Menu sections, dishes, descriptions, “new” badges, all price variants, and add-ons |
 | Highlights | Home page “Fan Favourites” cards |
-| Menu images | Menu photo carousel |
-| Experience | Experience gallery, plus home page “Space” teaser selection |
+| Photos | Menu photo carousel and Experience gallery |
 | Amenities | Visit page amenities and the home feature strip |
-| Add-ons | Menu extra chips and prices |
-| Page copy | Headings, descriptions, and button labels |
-| Site settings | Logo, hero/visit images, address, maps, hours, phone, WhatsApp, Instagram, average spend, SEO metadata, theme colour |
+| Settings | Brand name, hero/visit images, address, hours, phone, WhatsApp, Instagram, average spend |
 
 Every content row has:
 
-- **Published** — hides it from the public site immediately.
-- **Sort order** — lower numbers appear first.
+- **Visible on site** — hides it from the public site immediately without deleting it.
+- **↑ ↓ order buttons** — change the position in the list. New rows are added to the end.
+
+Some columns (slugs, layout flags, page copy, SEO metadata and theme colour) are
+intentionally kept out of the admin so they cannot be broken by accident. They
+stay in the database with their current values and are edited directly in the
+Supabase SQL editor if a developer needs to change them.
 
 Images can be uploaded to Supabase Storage or referenced by an existing
 `/assets/...` path. The original files remain in `public/assets`.
