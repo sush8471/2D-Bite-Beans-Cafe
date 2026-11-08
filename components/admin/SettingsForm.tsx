@@ -58,12 +58,7 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         <p className="admin-help">These images are used on the home and visit pages.</p>
 
         <div className="admin-grid">
-          <TextField name="brand_name" label="Brand name" defaultValue={settings.brand_name} />
-
-          <div className="admin-field">
-            <label>Logo</label>
-            <ImageField name="logo_url" defaultValue={settings.logo_url} folder="branding" />
-          </div>
+          <TextField name="brand_name" label="Brand name" defaultValue={settings.brand_name} full />
 
           <div className="admin-field">
             <label>Home hero image</label>
@@ -96,13 +91,6 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
 
         <div className="admin-grid">
           <TextField name="address" label="Address" defaultValue={settings.address} full textarea />
-          <TextField
-            name="maps_url"
-            label="Google Maps URL"
-            defaultValue={settings.maps_url}
-            help="Used by the “Open in Google Maps” link."
-            full
-          />
           <TextField name="hours_days" label="Opening days" defaultValue={settings.hours_days} />
           <TextField name="hours_time" label="Opening hours" defaultValue={settings.hours_time} />
           <TextField name="phone" label="Phone" defaultValue={settings.phone} />
@@ -113,40 +101,16 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
             help="Digits only, including country code (e.g. 918135972387)."
           />
           <TextField
-            name="instagram_handle"
-            label="Instagram handle"
-            defaultValue={settings.instagram_handle}
-          />
-          <TextField
             name="instagram_url"
             label="Instagram URL"
             defaultValue={settings.instagram_url}
+            full
           />
           <TextField
             name="average_spend"
             label="Average spend"
             defaultValue={settings.average_spend}
             help="Example: Rs. 200 — 400"
-          />
-        </div>
-      </div>
-
-      <div className="admin-card">
-        <h2>SEO &amp; theme</h2>
-        <div className="admin-grid">
-          <TextField name="meta_title" label="Browser title" defaultValue={settings.meta_title} full />
-          <TextField
-            name="meta_description"
-            label="Meta description"
-            defaultValue={settings.meta_description}
-            full
-            textarea
-          />
-          <TextField
-            name="theme_color"
-            label="Theme colour"
-            defaultValue={settings.theme_color}
-            help="Hex value used by mobile browsers."
           />
         </div>
       </div>

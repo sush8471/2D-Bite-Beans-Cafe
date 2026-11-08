@@ -11,12 +11,13 @@ export default async function AdminMenuPage() {
   requireSupabaseConfigured();
   const supabase = await createSupabaseServerClient();
 
-  const [categoriesResult, itemsResult] = await Promise.all([
+  const [categoriesResult, itemsResult, addOnsResult] = await Promise.all([
     supabase.from('menu_categories').select('*').order('sort_order'),
     supabase.from('menu_items').select('id, category_id'),
+    supabase.from('add_ons').select('*').order('sort_order'),
   ]);
 
-  const error = categoriesResult.error || itemsResult.error;
+  const error = categoriesResult.error || itemsResult.error || addOnsResult.error;
   const itemCounts = new Map<string, number>();
 
   for (const item of itemsResult.data ?? []) {
@@ -36,7 +37,7 @@ export default async function AdminMenuPage() {
     <>
       <PageHeader
         title="Menu"
-        description="Create categories, then open one to manage its dishes and prices. The filter bar uses the short filter label."
+        description="The sections of the menu, in the order they appear. Open a category to manage its dishes and prices."
       />
 
       {error ? (
@@ -46,6 +47,13 @@ export default async function AdminMenuPage() {
       ) : null}
 
       <CollectionManager table="menu_categories" rows={rows} />
+
+      <div className="admin-section-head">
+        <h2>Add-ons</h2>
+        <p className="admin-help">The extra items shown at the bottom of the menu page.</p>
+      </div>
+
+      <CollectionManager table="add_ons" rows={addOnsResult.data ?? []} />
     </>
   );
 }

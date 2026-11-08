@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import type { ActionState } from '@/lib/admin/action-state';
-import { COLLECTIONS, isTableName, type AdminField } from '@/lib/admin/collections';
+import { COLLECTIONS, isTableName, type AdminField, type TableName } from '@/lib/admin/collections';
 import { isSupabaseConfigured } from '@/lib/supabase/config';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
@@ -98,6 +98,114 @@ function readFields(
   return { payload };
 }
 
+type SupabaseServerClient = Awaited<ReturnType<typeof createSupabaseServerClient>>;
+
+function slugify(value: string): string {
+  const base = value
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return base || 'category';
+}
+
+/**
+ * New categories get a URL-safe slug automatically. The slug is still used by
+ * the filter bar and section anchors, but the owner never edits it directly.
+ */
+async function uniqueCategorySlug(
+  supabase: SupabaseServerClient,
+  name: string
+): Promise<string> {
+  const base = slugify(name);
+  const { data } = await supabase
+    .from('menu_categories')
+    .select('slug')
+    .like('slug', `${base}%`);
+
+  const taken = new Set((data ?? []).map((row) => String(row.slug)));
+  if (!taken.has(base)) return base;
+
+  let suffix = 2;
+  while (taken.has(`${base}-${suffix}`)) suffix += 1;
+  return `${base}-${suffix}`;
+}
+
+/** New rows are appended to the end of the list. */
+async function nextSortOrder(
+  supabase: SupabaseServerClient,
+  table: TableName | 'menu_items',
+  scope?: { column: 'category_id'; value: string }
+): Promise<number> {
+  let query = supabase
+    .from(table)
+    .select('sort_order')
+    .order('sort_order', { ascending: false })
+    .limit(1);
+
+  if (scope) query = query.eq(scope.column, scope.value);
+
+  const { data } = await query.maybeSingle();
+  return Number(data?.sort_order ?? 0) + 10;
+}
+
+/**
+ * Moves a row one place up or down by swapping its position with its neighbour,
+ * then renumbers the list in steps of ten. No raw numbers reach the owner.
+ */
+async function reorderRows(
+  supabase: SupabaseServerClient,
+  table: TableName | 'menu_items',
+  id: string,
+  direction: 'up' | 'down',
+  scope?: { column: 'category_id'; value: string }
+): Promise<ActionState> {
+  let query = supabase
+    .from(table)
+    .select('id, sort_order')
+    .order('sort_order', { ascending: true })
+    .order('id', { ascending: true });
+
+  if (scope) query = query.eq(scope.column, scope.value);
+
+  const { data, error } = await query;
+  if (error) return fail(error.message);
+
+  const rows = (data ?? []).map((row) => ({
+    id: String(row.id),
+    sort_order: Number(row.sort_order ?? 0),
+  }));
+
+  const index = rows.findIndex((row) => row.id === id);
+  if (index === -1) return fail('That item could not be found.');
+
+  const neighbour = direction === 'up' ? index - 1 : index + 1;
+  if (neighbour < 0 || neighbour >= rows.length) {
+    return { ok: true, message: 'Already at the edge of the list.' };
+  }
+
+  const before = new Map(rows.map((row) => [row.id, row.sort_order]));
+  const next = [...rows];
+  [next[index], next[neighbour]] = [next[neighbour], next[index]];
+
+  const updates = next
+    .map((row, position) => ({ id: row.id, sort_order: (position + 1) * 10 }))
+    .filter((row) => before.get(row.id) !== row.sort_order);
+
+  const results = await Promise.all(
+    updates.map((row) =>
+      supabase.from(table).update({ sort_order: row.sort_order }).eq('id', row.id)
+    )
+  );
+
+  const updateError = results.find((result) => result.error)?.error;
+  if (updateError) return fail(updateError.message);
+
+  revalidateSite();
+  return { ok: true, message: 'Order updated.' };
+}
+
 // ---------------------------------------------------------
 // Auth
 // ---------------------------------------------------------
@@ -155,15 +263,53 @@ export async function saveCollectionRow(
   if ('error' in parsed) return fail(parsed.error);
 
   const id = String(formData.get('id') ?? '').trim();
+
+  let payload = parsed.payload;
+
+  if (!id) {
+    payload = {
+      ...payload,
+      sort_order: await nextSortOrder(auth.supabase, table),
+    };
+  }
+
+  // The category filter label follows the name so it can never go stale.
+  if (table === 'menu_categories') {
+    const name = String(payload.name ?? '');
+    payload = { ...payload, filter_label: name };
+
+    if (!id) {
+      payload.slug = await uniqueCategorySlug(auth.supabase, name);
+    }
+  }
+
   const query = id
-    ? auth.supabase.from(table).update(parsed.payload).eq('id', id)
-    : auth.supabase.from(table).insert(parsed.payload);
+    ? auth.supabase.from(table).update(payload).eq('id', id)
+    : auth.supabase.from(table).insert(payload);
 
   const { error } = await query;
   if (error) return fail(error.message);
 
   revalidateSite();
   return { ok: true, message: id ? 'Changes saved.' : `${config.singular} created.` };
+}
+
+export async function moveCollectionRow(
+  _previousState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const table = String(formData.get('table') ?? '');
+  if (!isTableName(table)) return fail('Unknown collection.');
+
+  const id = String(formData.get('id') ?? '').trim();
+  if (!id) return fail('Missing record id.');
+
+  const direction = formData.get('direction') === 'up' ? 'up' : 'down';
+
+  const auth = await requireAdmin();
+  if (!auth.ok) return fail(auth.error);
+
+  return reorderRows(auth.supabase, table, id, direction);
 }
 
 export async function deleteCollectionRow(
@@ -203,11 +349,34 @@ export async function saveMenuItem(
   const description = String(formData.get('description') ?? '').trim();
   const isNew = formData.get('is_new') === 'on';
   const isPublished = formData.get('is_published') === 'on';
-  const sortOrder = Number(formData.get('sort_order') ?? 0);
 
   if (!categoryId) return fail('Missing category.');
   if (!name) return fail('Item name is required.');
-  if (!Number.isFinite(sortOrder)) return fail('Sort order must be a number.');
+
+  // New dishes are appended to their category. Existing ones keep their place.
+  let sortOrder: number;
+  const sortRaw = formData.get('sort_order');
+
+  if (sortRaw === null || String(sortRaw).trim() === '') {
+    if (id) {
+      const { data: current, error: readError } = await auth.supabase
+        .from('menu_items')
+        .select('sort_order')
+        .eq('id', id)
+        .maybeSingle();
+
+      if (readError) return fail(readError.message);
+      sortOrder = Number(current?.sort_order ?? 0);
+    } else {
+      sortOrder = await nextSortOrder(auth.supabase, 'menu_items', {
+        column: 'category_id',
+        value: categoryId,
+      });
+    }
+  } else {
+    sortOrder = Number(sortRaw);
+    if (!Number.isFinite(sortOrder)) return fail('Sort order must be a number.');
+  }
 
   let variants: Array<{ label: string; price: number; sort_order: number }> = [];
   try {
@@ -261,28 +430,42 @@ export async function deleteMenuItem(
   return { ok: true, message: 'Dish deleted.' };
 }
 
+export async function moveMenuItem(
+  _previousState: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const id = String(formData.get('id') ?? '').trim();
+  const categoryId = String(formData.get('category_id') ?? '').trim();
+  if (!id) return fail('Missing dish id.');
+  if (!categoryId) return fail('Missing category.');
+
+  const direction = formData.get('direction') === 'up' ? 'up' : 'down';
+
+  const auth = await requireAdmin();
+  if (!auth.ok) return fail(auth.error);
+
+  return reorderRows(auth.supabase, 'menu_items', id, direction, {
+    column: 'category_id',
+    value: categoryId,
+  });
+}
+
 // ---------------------------------------------------------
 // Site settings
 // ---------------------------------------------------------
 
 const SETTINGS_FIELDS: AdminField[] = [
   { name: 'brand_name', label: 'Brand name', type: 'text', required: true },
-  { name: 'logo_url', label: 'Logo', type: 'image', folder: 'branding' },
   { name: 'hero_image_url', label: 'Home hero image', type: 'image', folder: 'site' },
   { name: 'snapshot_image_url', label: 'Home visit card image', type: 'image', folder: 'site' },
   { name: 'visit_image_url', label: 'Visit page image', type: 'image', folder: 'site' },
   { name: 'address', label: 'Address', type: 'textarea', required: true },
-  { name: 'maps_url', label: 'Google Maps URL', type: 'text' },
   { name: 'hours_days', label: 'Opening days', type: 'text' },
   { name: 'hours_time', label: 'Opening hours', type: 'text' },
   { name: 'phone', label: 'Phone', type: 'text' },
   { name: 'whatsapp_number', label: 'WhatsApp number', type: 'text', help: 'Digits only, including country code.' },
-  { name: 'instagram_handle', label: 'Instagram handle', type: 'text' },
   { name: 'instagram_url', label: 'Instagram URL', type: 'text' },
   { name: 'average_spend', label: 'Average spend', type: 'text' },
-  { name: 'meta_title', label: 'Browser title', type: 'text' },
-  { name: 'meta_description', label: 'Meta description', type: 'textarea' },
-  { name: 'theme_color', label: 'Theme colour', type: 'text' },
 ];
 
 export async function saveSettings(
@@ -303,46 +486,6 @@ export async function saveSettings(
 
   revalidateSite();
   return { ok: true, message: 'Site settings saved.' };
-}
-
-// ---------------------------------------------------------
-// Page copy
-// ---------------------------------------------------------
-
-export async function savePageCopy(
-  _previousState: ActionState,
-  formData: FormData
-): Promise<ActionState> {
-  const auth = await requireAdmin();
-  if (!auth.ok) return fail(auth.error);
-
-  const { data: existing, error: readError } = await auth.supabase
-    .from('page_copy')
-    .select('key,page,label,multiline,sort_order,value');
-
-  if (readError) return fail(readError.message);
-  if (!existing || existing.length === 0) {
-    return fail('No page copy rows found. Run supabase/seed.sql first.');
-  }
-
-  const rows = existing
-    .filter((row) => formData.has(`copy:${row.key}`))
-    .map((row) => ({
-      key: row.key,
-      page: row.page,
-      label: row.label,
-      multiline: row.multiline,
-      sort_order: row.sort_order,
-      value: String(formData.get(`copy:${row.key}`) ?? ''),
-    }));
-
-  if (rows.length === 0) return fail('No copy fields were submitted.');
-
-  const { error } = await auth.supabase.from('page_copy').upsert(rows, { onConflict: 'key' });
-  if (error) return fail(error.message);
-
-  revalidateSite();
-  return { ok: true, message: 'Page copy saved.' };
 }
 
 // ---------------------------------------------------------

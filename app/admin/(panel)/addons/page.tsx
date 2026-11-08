@@ -1,8 +1,5 @@
-import CollectionPage from '@/components/admin/CollectionPage';
-
-export const metadata = { title: 'Add-ons' };
-export const dynamic = 'force-dynamic';
+import { redirect } from 'next/navigation';
 
 export default function AdminAddOnsPage() {
-  return <CollectionPage table="add_ons" />;
+  redirect('/admin/menu');
 }

@@ -1,8 +1,5 @@
-import CollectionPage from '@/components/admin/CollectionPage';
-
-export const metadata = { title: 'Menu images' };
-export const dynamic = 'force-dynamic';
+import { redirect } from 'next/navigation';
 
 export default function AdminGalleryPage() {
-  return <CollectionPage table="menu_gallery" />;
+  redirect('/admin/photos');
 }

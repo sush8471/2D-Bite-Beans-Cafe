@@ -11,7 +11,7 @@ const cards = [
     table: 'menu_categories',
     label: 'Menu categories',
     href: '/admin/menu',
-    description: 'Sections, banners and ordering',
+    description: 'Sections and their order',
   },
   {
     table: 'menu_items',
@@ -20,34 +20,34 @@ const cards = [
     description: 'Names, descriptions and prices',
   },
   {
+    table: 'add_ons',
+    label: 'Add-ons',
+    href: '/admin/menu',
+    description: 'Extras and prices',
+  },
+  {
     table: 'highlights',
     label: 'Highlights',
     href: '/admin/highlights',
-    description: 'Home page feature cards',
+    description: 'Feature cards on the home page',
   },
   {
     table: 'menu_gallery',
-    label: 'Menu images',
-    href: '/admin/gallery',
-    description: 'Menu photo carousel',
+    label: 'Menu photos',
+    href: '/admin/photos',
+    description: 'Carousel on the menu page',
   },
   {
     table: 'experience_photos',
-    label: 'Experience photos',
-    href: '/admin/experience',
-    description: 'Interior gallery and home teaser',
+    label: 'Cafe photos',
+    href: '/admin/photos',
+    description: 'Gallery and home teaser',
   },
   {
     table: 'amenities',
     label: 'Amenities',
     href: '/admin/amenities',
     description: 'Visit page features',
-  },
-  {
-    table: 'add_ons',
-    label: 'Add-ons',
-    href: '/admin/addons',
-    description: 'Menu extras and prices',
   },
 ] as const;
 
@@ -115,37 +115,29 @@ export default async function AdminDashboardPage() {
           <Link href="/admin/menu" className="admin-btn admin-btn--primary">
             Manage the menu
           </Link>
+          <Link href="/admin/photos" className="admin-btn admin-btn--outline">
+            Photos
+          </Link>
+          <Link href="/admin/highlights" className="admin-btn admin-btn--outline">
+            Home highlights
+          </Link>
           <Link href="/admin/settings" className="admin-btn admin-btn--outline">
-            Site settings
-          </Link>
-          <Link href="/admin/copy" className="admin-btn admin-btn--outline">
-            Page copy
-          </Link>
-          <Link href="/admin/gallery" className="admin-btn admin-btn--outline">
-            Menu images
+            Settings
           </Link>
         </div>
       </div>
 
       <div className="admin-card">
-        <h2>How publishing works</h2>
+        <h2>Good to know</h2>
         <ul className="admin-list">
           <li>
-            Every row has a <strong>Published</strong> toggle. Hidden rows are removed from the
-            public website immediately.
+            Use the <strong>↑ ↓</strong> buttons to change the order things appear in. New items
+            are added to the end.
           </li>
           <li>
-            <strong>Sort order</strong> controls the position on the site. Lower numbers appear
-            first.
+            Turn <strong>Visible on site</strong> off to hide something without deleting it.
           </li>
-          <li>
-            Images upload to Supabase Storage. The original files in <code>public/assets</code>{' '}
-            keep working until you replace them.
-          </li>
-          <li>
-            Only members of <code>public.admin_users</code> can write. Row Level Security enforces
-            this in the database as well as in this UI.
-          </li>
+          <li>Changes appear on the website as soon as you save.</li>
         </ul>
       </div>
     </>

@@ -102,10 +102,6 @@ export default async function AdminCategoryPage({ params }: CategoryPageProps) {
           <span className={`admin-pill ${category.is_published ? 'admin-pill--live' : 'admin-pill--draft'}`}>
             {category.is_published ? 'Live' : 'Hidden'}
           </span>
-          <p className="admin-help">
-            <code>{category.slug}</code> · {category.is_compact ? 'compact price list' : 'dish cards'} ·
-            sort {category.sort_order}
-          </p>
         </div>
       </div>
 
@@ -114,7 +110,7 @@ export default async function AdminCategoryPage({ params }: CategoryPageProps) {
           <span className="admin-row__plus">✎</span>
           <span className="admin-row__summary">
             <strong>Edit category details</strong>
-            <span>Name, slug, banner image, filter label and visibility</span>
+            <span>Name, banner image and visibility</span>
           </span>
         </summary>
         <div className="admin-row__body">

@@ -824,6 +824,64 @@
   background-color: rgba(160, 37, 37, 0.06);
 }
 
+/* ---------- Reorder controls ---------- */
+.admin-position {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.07);
+}
+
+.admin-position__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.admin-position__buttons {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+
+.admin-position__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(26, 26, 26, 0.12);
+  border-radius: 8px;
+  background-color: #fff;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-position__btn:hover:not(:disabled) {
+  border-color: rgba(139, 38, 53, 0.35);
+  color: var(--accent);
+}
+
+.admin-position__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.admin-position__error {
+  color: #a02525;
+  font-size: 0.75rem;
+}
+
+.admin-position__ok {
+  color: #3d7a4a;
+  font-size: 0.75rem;
+}
+
 /* ---------- Category detail ---------- */
 .admin-category-summary {
   display: flex;

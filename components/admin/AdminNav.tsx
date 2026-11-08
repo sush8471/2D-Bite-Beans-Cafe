@@ -7,12 +7,9 @@ const links = [
   { href: '/admin', label: 'Dashboard', exact: true },
   { href: '/admin/menu', label: 'Menu', exact: false },
   { href: '/admin/highlights', label: 'Highlights', exact: false },
-  { href: '/admin/gallery', label: 'Menu images', exact: false },
-  { href: '/admin/experience', label: 'Experience', exact: false },
+  { href: '/admin/photos', label: 'Photos', exact: false },
   { href: '/admin/amenities', label: 'Amenities', exact: false },
-  { href: '/admin/addons', label: 'Add-ons', exact: false },
-  { href: '/admin/copy', label: 'Page copy', exact: false },
-  { href: '/admin/settings', label: 'Site settings', exact: false },
+  { href: '/admin/settings', label: 'Settings', exact: false },
 ];
 
 export default function AdminNav() {

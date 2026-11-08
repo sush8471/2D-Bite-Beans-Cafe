@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useActionState, useId } from 'react';
 import ImageField from '@/components/admin/ImageField';
+import { CollectionPositionControls } from '@/components/admin/PositionControls';
 import SubmitButton from '@/components/admin/SubmitButton';
 import {
   deleteCollectionRow,
@@ -23,14 +24,9 @@ type CollectionManagerProps = {
   rows: Row[];
 };
 
-function nextSortOrder(rows: Row[]): number {
-  return rows.reduce((max, row) => Math.max(max, Number(row.sort_order) || 0), 0) + 10;
-}
-
-function defaultsFor(config: CollectionConfig, rows: Row[]): Row {
+function defaultsFor(config: CollectionConfig): Row {
   const defaults: Row = {
     is_published: true,
-    sort_order: nextSortOrder(rows),
   };
 
   for (const field of config.fields) {
@@ -184,7 +180,7 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
   const sortedRows = [...rows].sort(
     (a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0)
   );
-  const blank = defaultsFor(config, rows);
+  const blank = defaultsFor(config);
 
   return (
     <div className="admin-collection">
@@ -205,7 +201,7 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
         <p className="admin-empty">Nothing here yet. Use “Add {config.singular}” above.</p>
       ) : null}
 
-      {sortedRows.map((row) => {
+      {sortedRows.map((row, index) => {
         const id = String(row.id ?? '');
         if (!id) return null;
 
@@ -243,8 +239,14 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
             </summary>
 
             <div className="admin-row__body">
+              <CollectionPositionControls
+                table={table}
+                id={id}
+                isFirst={index === 0}
+                isLast={index === sortedRows.length - 1}
+              />
               <RowForm config={config} row={row} id={id} />
-              <DeleteForm config={config} id={id} />
+              {config.canDelete === false ? null : <DeleteForm config={config} id={id} />}
             </div>
           </details>
         );

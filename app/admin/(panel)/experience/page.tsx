@@ -1,8 +1,5 @@
-import CollectionPage from '@/components/admin/CollectionPage';
-
-export const metadata = { title: 'Experience gallery' };
-export const dynamic = 'force-dynamic';
+import { redirect } from 'next/navigation';
 
 export default function AdminExperiencePage() {
-  return <CollectionPage table="experience_photos" />;
+  redirect('/admin/photos');
 }

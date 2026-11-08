@@ -24,7 +24,7 @@ export default async function AdminSettingsPage() {
     <>
       <PageHeader
         title="Site settings"
-        description="Brand details, contact information, hours, images and SEO metadata. Changes appear on both the home and visit pages."
+        description="Brand details, contact information, opening hours, prices and page images. Changes appear on both the home and visit pages."
       />
 
       {error ? (

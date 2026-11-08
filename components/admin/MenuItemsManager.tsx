@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from 'react';
 import { deleteMenuItem, saveMenuItem } from '@/app/admin/actions';
+import { MenuItemPositionControls } from '@/components/admin/PositionControls';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { emptyActionState, type ActionState } from '@/lib/admin/action-state';
 
@@ -58,11 +59,7 @@ function priceSummary(variants: Variant[]): string {
   return min === max ? `Rs. ${min}` : `Rs. ${min} – ${max}`;
 }
 
-function nextSortOrder(items: Item[]): number {
-  return items.reduce((max, item) => Math.max(max, item.sort_order || 0), 0) + 10;
-}
-
-function ItemForm({ categoryId, item, items }: { categoryId: string; item?: Item; items: Item[] }) {
+function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
   const [state, formAction] = useActionState(saveMenuItem, emptyActionState);
   const [variants, setVariants] = useState<EditableVariant[]>(() =>
     item && item.variants.length > 0
@@ -93,20 +90,9 @@ function ItemForm({ categoryId, item, items }: { categoryId: string; item?: Item
       <input type="hidden" name="variants" value={variantsPayload} readOnly />
 
       <div className="admin-grid">
-        <div className="admin-field">
+        <div className="admin-field admin-field--full">
           <label>Dish name</label>
           <input type="text" name="name" defaultValue={item?.name ?? ''} required />
-        </div>
-
-        <div className="admin-field">
-          <label>Sort order</label>
-          <input
-            type="number"
-            name="sort_order"
-            min={0}
-            step={1}
-            defaultValue={item?.sort_order ?? nextSortOrder(items)}
-          />
         </div>
 
         <div className="admin-field admin-field--full">
@@ -133,7 +119,7 @@ function ItemForm({ categoryId, item, items }: { categoryId: string; item?: Item
               name="is_published"
               defaultChecked={item?.is_published ?? true}
             />
-            <span>Published</span>
+            <span>Visible on site</span>
           </label>
         </div>
       </div>
@@ -243,7 +229,7 @@ export default function MenuItemsManager({ categoryId, items }: MenuItemsManager
           </span>
         </summary>
         <div className="admin-row__body">
-          <ItemForm categoryId={categoryId} items={items} />
+          <ItemForm categoryId={categoryId} />
         </div>
       </details>
 
@@ -251,7 +237,7 @@ export default function MenuItemsManager({ categoryId, items }: MenuItemsManager
         <p className="admin-empty">No dishes yet. Use “Add dish” above.</p>
       ) : null}
 
-      {sorted.map((item) => (
+      {sorted.map((item, index) => (
         <details className="admin-row" key={item.id}>
           <summary>
             <span className="admin-row__thumb admin-row__thumb--text">
@@ -268,7 +254,13 @@ export default function MenuItemsManager({ categoryId, items }: MenuItemsManager
             </span>
           </summary>
           <div className="admin-row__body">
-            <ItemForm categoryId={categoryId} item={item} items={items} />
+            <MenuItemPositionControls
+              categoryId={categoryId}
+              id={item.id}
+              isFirst={index === 0}
+              isLast={index === sorted.length - 1}
+            />
+            <ItemForm categoryId={categoryId} item={item} />
             <DeleteItemForm id={item.id} />
           </div>
         </details>
