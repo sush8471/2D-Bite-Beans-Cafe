@@ -49,9 +49,9 @@ export const COLLECTIONS: Record<TableName, CollectionConfig> = {
     description:
       'The sections of the menu, in the order they appear. Open a category to manage its dishes and prices.',
     fields: [
-      { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Appetizers & Street Food' },
+      { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Appetizers & Street Food', full: true },
       { name: 'image_url', label: 'Banner image', type: 'image', folder: 'menu/categories', full: true },
-      { name: 'is_published', label: 'Visible on site', type: 'checkbox' },
+      { name: 'is_published', label: 'Visible on site', type: 'checkbox', full: true },
     ],
     titleField: 'name',
     subtitleField: 'slug',
@@ -67,10 +67,10 @@ export const COLLECTIONS: Record<TableName, CollectionConfig> = {
     description: 'The scrolling “Fan Favourites” cards on the home page.',
     fields: [
       { name: 'image_url', label: 'Image', type: 'image', folder: 'highlights', required: true, full: true },
-      { name: 'badge', label: 'Badge', type: 'text', placeholder: 'Best Seller' },
-      { name: 'title', label: 'Title', type: 'text', required: true, placeholder: 'Premium Bento' },
-      { name: 'description', label: 'Description', type: 'textarea', rows: 3, full: true },
+      { name: 'title', label: 'Title', type: 'text', required: true, placeholder: 'Premium Bento', full: true },
+      { name: 'badge', label: 'Badge (Optional)', type: 'text', placeholder: 'Best Seller' },
       { name: 'is_published', label: 'Visible on site', type: 'checkbox' },
+      { name: 'description', label: 'Description', type: 'textarea', rows: 3, full: true },
     ],
     titleField: 'title',
     subtitleField: 'badge',
@@ -83,8 +83,8 @@ export const COLLECTIONS: Record<TableName, CollectionConfig> = {
     description: 'Photos shown in the “Menu Images” carousel on the menu page.',
     fields: [
       { name: 'image_url', label: 'Image', type: 'image', folder: 'menu/gallery', required: true, full: true },
-      { name: 'label', label: 'Label', type: 'text', placeholder: 'Boba Drinks' },
-      { name: 'is_published', label: 'Visible on site', type: 'checkbox' },
+      { name: 'label', label: 'Label', type: 'text', placeholder: 'Boba Drinks', full: true },
+      { name: 'is_published', label: 'Visible on site', type: 'checkbox', full: true },
     ],
     titleField: 'label',
     imageField: 'image_url',
@@ -97,7 +97,7 @@ export const COLLECTIONS: Record<TableName, CollectionConfig> = {
       'Photos on the Experience page. Tick “Show on home page” to feature one in the home page “Space” section.',
     fields: [
       { name: 'image_url', label: 'Image', type: 'image', folder: 'experience', required: true, full: true },
-      { name: 'title', label: 'Title', type: 'text', required: true, placeholder: 'The Chandelier Room' },
+      { name: 'title', label: 'Title', type: 'text', required: true, placeholder: 'The Chandelier Room', full: true },
       { name: 'description', label: 'Description', type: 'textarea', rows: 2, full: true },
       { name: 'is_featured_home', label: 'Show on home page', type: 'checkbox' },
       { name: 'is_published', label: 'Visible on site', type: 'checkbox' },
@@ -113,7 +113,7 @@ export const COLLECTIONS: Record<TableName, CollectionConfig> = {
     description:
       'Amenity cards on the Visit page. Tick “Show on home page” to add one to the home page strip.',
     fields: [
-      { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Dog Friendly' },
+      { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Dog Friendly', full: true },
       { name: 'icon_url', label: 'Icon', type: 'image', folder: 'amenities', full: true },
       { name: 'show_on_home', label: 'Show on home page', type: 'checkbox' },
       { name: 'is_published', label: 'Visible on site', type: 'checkbox' },
