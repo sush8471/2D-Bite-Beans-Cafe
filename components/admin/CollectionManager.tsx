@@ -130,11 +130,13 @@ export function RowForm({
   row,
   id,
   onSaved,
+  deleteSlot,
 }: {
   config: CollectionConfig;
   row: Row;
   id?: string;
   onSaved?: () => void;
+  deleteSlot?: React.ReactNode;
 }) {
   const [state, formAction] = useActionState(saveCollectionRow, emptyActionState);
 
@@ -160,7 +162,8 @@ export function RowForm({
 
       <FormMessage state={state} />
 
-      <div className="admin-form__actions">
+      <div className="flex items-center justify-between gap-4 mt-4 pt-1">
+        <div>{deleteSlot}</div>
         <SubmitButton>{id ? 'Save changes' : `Add ${config.singular}`}</SubmitButton>
       </div>
     </form>
@@ -193,7 +196,7 @@ function DeleteForm({
       <button
         type="button"
         onClick={() => setConfirmOpen(true)}
-        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer mr-1"
+        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer"
         title={`Delete ${config.singular}`}
         aria-label={`Delete ${config.singular}`}
       >
@@ -351,19 +354,9 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
                 </DialogTrigger>
                 <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
                   <DialogHeader className="pt-1.5 pb-4 border-b border-border/50">
-                    <div className="flex items-center justify-between gap-4 pr-10 min-h-[2.5rem]">
-                      <DialogTitle className="text-lg font-bold truncate">
-                        Edit: {title}
-                      </DialogTitle>
-                      {config.canDelete !== false ? (
-                        <DeleteForm
-                          config={config}
-                          id={id}
-                          title={title}
-                          onDeleted={() => setEditingRowId(null)}
-                        />
-                      ) : null}
-                    </div>
+                    <DialogTitle className="text-lg font-bold truncate pr-8">
+                      Edit: {title}
+                    </DialogTitle>
                   </DialogHeader>
 
                   <div className="py-2">
@@ -372,6 +365,16 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
                       row={row}
                       id={id}
                       onSaved={() => setEditingRowId(null)}
+                      deleteSlot={
+                        config.canDelete !== false ? (
+                          <DeleteForm
+                            config={config}
+                            id={id}
+                            title={title}
+                            onDeleted={() => setEditingRowId(null)}
+                          />
+                        ) : null
+                      }
                     />
                   </div>
                 </DialogContent>

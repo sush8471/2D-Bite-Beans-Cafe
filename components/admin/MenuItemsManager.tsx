@@ -71,10 +71,12 @@ function ItemForm({
   categoryId,
   item,
   onSaved,
+  deleteSlot,
 }: {
   categoryId: string;
   item?: Item;
   onSaved?: () => void;
+  deleteSlot?: React.ReactNode;
 }) {
   const [state, formAction] = useActionState(saveMenuItem, emptyActionState);
   const [variants, setVariants] = useState<EditableVariant[]>(() =>
@@ -210,7 +212,8 @@ function ItemForm({
 
       <FormMessage state={state} />
 
-      <div className="admin-form__actions">
+      <div className="flex items-center justify-between gap-4 mt-4 pt-1">
+        <div>{deleteSlot}</div>
         <SubmitButton>{item ? 'Save dish' : 'Add dish'}</SubmitButton>
       </div>
     </form>
@@ -241,7 +244,7 @@ function DeleteItemForm({
       <button
         type="button"
         onClick={() => setConfirmOpen(true)}
-        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer mr-1"
+        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer"
         title="Delete dish"
         aria-label="Delete dish"
       >
@@ -370,16 +373,9 @@ export default function MenuItemsManager({ categoryId, items }: MenuItemsManager
               </DialogTrigger>
               <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
                 <DialogHeader className="pt-1.5 pb-4 border-b border-border/50">
-                  <div className="flex items-center justify-between gap-4 pr-10 min-h-[2.5rem]">
-                    <DialogTitle className="text-lg font-bold truncate">
-                      Edit: {item.name}
-                    </DialogTitle>
-                    <DeleteItemForm
-                      id={item.id}
-                      name={item.name}
-                      onDeleted={() => setEditingItemId(null)}
-                    />
-                  </div>
+                  <DialogTitle className="text-lg font-bold truncate pr-8">
+                    Edit: {item.name}
+                  </DialogTitle>
                 </DialogHeader>
 
                 <div className="py-2">
@@ -387,6 +383,13 @@ export default function MenuItemsManager({ categoryId, items }: MenuItemsManager
                     categoryId={categoryId}
                     item={item}
                     onSaved={() => setEditingItemId(null)}
+                    deleteSlot={
+                      <DeleteItemForm
+                        id={item.id}
+                        name={item.name}
+                        onDeleted={() => setEditingItemId(null)}
+                      />
+                    }
                   />
                 </div>
               </DialogContent>
