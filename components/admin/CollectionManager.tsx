@@ -130,12 +130,14 @@ export function RowForm({
   row,
   id,
   onSaved,
+  onCancel,
   deleteSlot,
 }: {
   config: CollectionConfig;
   row: Row;
   id?: string;
   onSaved?: () => void;
+  onCancel?: () => void;
   deleteSlot?: React.ReactNode;
 }) {
   const [state, formAction] = useActionState(saveCollectionRow, emptyActionState);
@@ -149,22 +151,42 @@ export function RowForm({
     }
   }, [state.ok, onSaved]);
 
+  const isModal = Boolean(onCancel);
+
   return (
-    <form action={formAction} className="admin-form">
+    <form action={formAction} className={`admin-form ${isModal ? 'flex flex-col flex-1 min-h-0' : ''}`}>
       <input type="hidden" name="table" value={config.table} />
       {id ? <input type="hidden" name="id" value={id} /> : null}
 
-      <div className="admin-grid">
-        {config.fields.map((field) => (
-          <FieldControl key={field.name} field={field} value={row[field.name]} />
-        ))}
+      <div className={isModal ? 'overflow-y-auto px-5 sm:px-6 py-4 flex-1 admin-modal-scroll' : ''}>
+        <div className="admin-grid">
+          {config.fields.map((field) => (
+            <FieldControl key={field.name} field={field} value={row[field.name]} />
+          ))}
+        </div>
+        <FormMessage state={state} />
       </div>
 
-      <FormMessage state={state} />
-
-      <div className="flex items-center justify-between gap-4 mt-4 pt-1">
+      <div
+        className={`flex items-center justify-between gap-4 ${
+          isModal
+            ? 'px-5 sm:px-6 py-4 border-t border-border/50 bg-stone-50/50 dark:bg-stone-900/30 shrink-0'
+            : 'mt-6 pt-4 border-t border-border/50'
+        }`}
+      >
         <div>{deleteSlot}</div>
-        <SubmitButton>{id ? 'Save changes' : `Add ${config.singular}`}</SubmitButton>
+        <div className="flex items-center gap-2.5">
+          {onCancel ? (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="px-4 py-2 rounded-xl text-sm font-semibold text-stone-600 hover:text-stone-900 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800 transition-colors cursor-pointer"
+            >
+              Cancel
+            </button>
+          ) : null}
+          <SubmitButton>{id ? 'Save changes' : `Add ${config.singular}`}</SubmitButton>
+        </div>
       </div>
     </form>
   );
@@ -196,11 +218,12 @@ function DeleteForm({
       <button
         type="button"
         onClick={() => setConfirmOpen(true)}
-        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 dark:text-rose-400 transition-colors cursor-pointer"
         title={`Delete ${config.singular}`}
         aria-label={`Delete ${config.singular}`}
       >
-        <Trash2 className="size-5" />
+        <Trash2 className="size-3.5" />
+        <span>Delete</span>
       </button>
 
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
@@ -278,15 +301,19 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
             </span>
           </button>
         </DialogTrigger>
-        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
-          <DialogHeader className="pt-1.5 pb-4 border-b border-border/50">
-            <div className="flex items-center justify-between gap-4 pr-10 min-h-[2.5rem]">
-              <DialogTitle className="text-lg font-bold">Add {config.singular}</DialogTitle>
-            </div>
+        <DialogContent className="max-w-xl max-h-[90vh] flex flex-col gap-0 p-0 overflow-hidden rounded-2xl shadow-2xl border bg-background">
+          <DialogHeader className="px-5 sm:px-6 pt-5 pb-4 border-b border-border/50 shrink-0 pr-12 text-left">
+            <DialogTitle className="text-lg font-bold">Add {config.singular}</DialogTitle>
+            <DialogDescription className="text-xs text-muted-foreground mt-0.5">
+              Fill in the details below to add a new {config.singular.toLowerCase()}.
+            </DialogDescription>
           </DialogHeader>
-          <div className="py-2">
-            <RowForm config={config} row={blank} onSaved={() => setIsAddOpen(false)} />
-          </div>
+          <RowForm
+            config={config}
+            row={blank}
+            onSaved={() => setIsAddOpen(false)}
+            onCancel={() => setIsAddOpen(false)}
+          />
         </DialogContent>
       </Dialog>
 
@@ -352,31 +379,33 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
                     <Pencil className="size-3.5" />
                   </button>
                 </DialogTrigger>
-                <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
-                  <DialogHeader className="pt-1.5 pb-4 border-b border-border/50">
+                <DialogContent className="max-w-xl max-h-[90vh] flex flex-col gap-0 p-0 overflow-hidden rounded-2xl shadow-2xl border bg-background">
+                  <DialogHeader className="px-5 sm:px-6 pt-5 pb-4 border-b border-border/50 shrink-0 pr-12 text-left">
                     <DialogTitle className="text-lg font-bold truncate pr-8">
                       Edit: {title}
                     </DialogTitle>
+                    <DialogDescription className="text-xs text-muted-foreground mt-0.5">
+                      Update the information and visibility settings for this {config.singular.toLowerCase()}.
+                    </DialogDescription>
                   </DialogHeader>
 
-                  <div className="py-2">
-                    <RowForm
-                      config={config}
-                      row={row}
-                      id={id}
-                      onSaved={() => setEditingRowId(null)}
-                      deleteSlot={
-                        config.canDelete !== false ? (
-                          <DeleteForm
-                            config={config}
-                            id={id}
-                            title={title}
-                            onDeleted={() => setEditingRowId(null)}
-                          />
-                        ) : null
-                      }
-                    />
-                  </div>
+                  <RowForm
+                    config={config}
+                    row={row}
+                    id={id}
+                    onSaved={() => setEditingRowId(null)}
+                    onCancel={() => setEditingRowId(null)}
+                    deleteSlot={
+                      config.canDelete !== false ? (
+                        <DeleteForm
+                          config={config}
+                          id={id}
+                          title={title}
+                          onDeleted={() => setEditingRowId(null)}
+                        />
+                      ) : null
+                    }
+                  />
                 </DialogContent>
               </Dialog>
             </div>
