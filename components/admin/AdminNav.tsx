@@ -8,7 +8,6 @@ const links = [
   { href: '/admin/menu', label: 'Menu', exact: false },
   { href: '/admin/highlights', label: 'Highlights', exact: false },
   { href: '/admin/photos', label: 'Photos', exact: false },
-  { href: '/admin/amenities', label: 'Amenities', exact: false },
   { href: '/admin/settings', label: 'Settings', exact: false },
 ];
 

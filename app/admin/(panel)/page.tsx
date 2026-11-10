@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import AdminBanner from '@/components/admin/AdminBanner';
-import PageHeader from '@/components/admin/PageHeader';
 import { requireSupabaseConfigured } from '@/lib/admin/guard';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import {
+  RestaurantDashboard,
+  type RecentDish,
+  type StoreSettingsData,
+} from '@/components/admin/RestaurantDashboard';
+import { getAdminSession } from '@/lib/admin/auth';
+import { defaultContent } from '@/lib/default-content';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,25 +49,49 @@ const cards = [
     href: '/admin/photos',
     description: 'Gallery and home teaser',
   },
-  {
-    table: 'amenities',
-    label: 'Amenities',
-    href: '/admin/amenities',
-    description: 'Visit page features',
-  },
 ] as const;
+
+function formatVariantPrice(variants?: { price: number }[]): string {
+  if (!variants || variants.length === 0) return 'Rs. 250';
+  const prices = variants.map((v) => v.price).filter((p) => typeof p === 'number');
+  if (prices.length === 0) return 'Rs. 250';
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  return min === max ? `Rs. ${min}` : `Rs. ${min} — ${max}`;
+}
 
 export default async function AdminDashboardPage() {
   requireSupabaseConfigured();
-  const supabase = await createSupabaseServerClient();
+  const [supabase, session] = await Promise.all([
+    createSupabaseServerClient(),
+    getAdminSession(),
+  ]);
 
-  const [counts, settingsResult] = await Promise.all([
+  const [counts, settingsResult, recentItemsResult, categoriesResult] = await Promise.all([
     Promise.all(
       cards.map((card) =>
         supabase.from(card.table).select('*', { count: 'exact', head: true })
       )
     ),
-    supabase.from('site_settings').select('id').eq('id', 1).maybeSingle(),
+    supabase.from('site_settings').select('*').eq('id', 1).maybeSingle(),
+    supabase
+      .from('menu_items')
+      .select(`
+        id,
+        name,
+        is_new,
+        is_published,
+        updated_at,
+        menu_categories (
+          name
+        ),
+        menu_item_variants (
+          price
+        )
+      `)
+      .order('updated_at', { ascending: false })
+      .limit(5),
+    supabase.from('menu_categories').select('id, name').order('sort_order'),
   ]);
 
   const errors = counts.map((result) => result.error).filter(Boolean);
@@ -69,17 +99,72 @@ export default async function AdminDashboardPage() {
     cards.map((card, index) => [card.table, counts[index].count ?? 0])
   );
 
-  return (
-    <>
-      <PageHeader
-        title="Content studio"
-        description="Update the website without touching code. Changes go live as soon as you save."
-      >
-        <Link href="/" target="_blank" rel="noopener noreferrer" className="admin-btn admin-btn--outline">
-          View website ↗
-        </Link>
-      </PageHeader>
+  const countsObj = {
+    menu_items: countByName.get('menu_items') ?? 0,
+    menu_categories: countByName.get('menu_categories') ?? 0,
+    add_ons: countByName.get('add_ons') ?? 0,
+    highlights: countByName.get('highlights') ?? 0,
+    menu_gallery: countByName.get('menu_gallery') ?? 0,
+    experience_photos: countByName.get('experience_photos') ?? 0,
+    amenities: 0,
+  };
 
+  // Compile storefront settings from DB or defaultContent fallback
+  const rawSettings = settingsResult.data || defaultContent.settings;
+  const storeSettings: StoreSettingsData = {
+    brand_name: rawSettings.brand_name || 'Bite & Beans',
+    address: rawSettings.address || 'Rajgarh Rd, Sarania Hills, Guwahati, Assam 781003',
+    maps_url:
+      rawSettings.maps_url ||
+      'https://www.google.com/maps/search/?api=1&query=Bite+%26+Beans+Sarania+Hills+Guwahati',
+    hours_days: rawSettings.hours_days || 'Monday — Sunday',
+    hours_time: rawSettings.hours_time || '12:00 PM — 10:00 PM',
+    phone: rawSettings.phone || '060004 87453',
+    whatsapp_number: rawSettings.whatsapp_number || '918135972387',
+    instagram_handle: rawSettings.instagram_handle || '@biteandbeanss',
+    instagram_url: rawSettings.instagram_url || 'https://instagram.com/biteandbeanss',
+    average_spend: rawSettings.average_spend || 'Rs. 200 — 400',
+  };
+
+  // Compile recently modified dishes from DB or fallback
+  let recentDishes: RecentDish[] = [];
+  if (recentItemsResult.data && recentItemsResult.data.length > 0) {
+    recentDishes = recentItemsResult.data.map((item: any) => ({
+      id: String(item.id),
+      name: item.name,
+      categoryName: item.menu_categories?.name || 'Menu Item',
+      priceFormatted: formatVariantPrice(item.menu_item_variants),
+      isPublished: Boolean(item.is_published),
+      isNew: Boolean(item.is_new),
+    }));
+  } else {
+    recentDishes = defaultContent.categories
+      .flatMap((cat) =>
+        cat.items.map((item) => ({
+          id: item.name,
+          name: item.name,
+          categoryName: cat.name,
+          priceFormatted: formatVariantPrice(item.variants),
+          isPublished: item.is_published,
+          isNew: item.is_new,
+        }))
+      )
+      .slice(0, 5);
+  }
+
+  const categories =
+    categoriesResult.data && categoriesResult.data.length > 0
+      ? categoriesResult.data.map((c: any) => ({
+          id: String(c.id),
+          name: String(c.name),
+        }))
+      : defaultContent.categories.map((c) => ({
+          id: c.name,
+          name: c.name,
+        }));
+
+  return (
+    <div className="flex flex-col gap-6">
       {errors.length > 0 ? (
         <AdminBanner tone="error" title="Database setup is incomplete">
           <p>
@@ -99,47 +184,18 @@ export default async function AdminDashboardPage() {
         </AdminBanner>
       ) : null}
 
-      <div className="admin-grid-cards">
-        {cards.map((card) => (
-          <Link href={card.href} className="admin-stat" key={card.table}>
-            <span className="admin-stat__count">{countByName.get(card.table) ?? 0}</span>
-            <strong>{card.label}</strong>
-            <span>{card.description}</span>
-          </Link>
-        ))}
-      </div>
-
-      <div className="admin-card">
-        <h2>Quick actions</h2>
-        <div className="admin-quick-links">
-          <Link href="/admin/menu" className="admin-btn admin-btn--primary">
-            Manage the menu
-          </Link>
-          <Link href="/admin/photos" className="admin-btn admin-btn--outline">
-            Photos
-          </Link>
-          <Link href="/admin/highlights" className="admin-btn admin-btn--outline">
-            Home highlights
-          </Link>
-          <Link href="/admin/settings" className="admin-btn admin-btn--outline">
-            Settings
-          </Link>
-        </div>
-      </div>
-
-      <div className="admin-card">
-        <h2>Good to know</h2>
-        <ul className="admin-list">
-          <li>
-            Use the <strong>↑ ↓</strong> buttons to change the order things appear in. New items
-            are added to the end.
-          </li>
-          <li>
-            Turn <strong>Visible on site</strong> off to hide something without deleting it.
-          </li>
-          <li>Changes appear on the website as soon as you save.</li>
-        </ul>
-      </div>
-    </>
+      {/* Modern, Restaurant-tailored Admin Studio Dashboard */}
+      <RestaurantDashboard
+        counts={countsObj}
+        settings={storeSettings}
+        recentDishes={recentDishes}
+        categories={categories}
+        userEmail={
+          session.configured && session.user?.email
+            ? session.user.email
+            : 'admin@biteandbeans.com'
+        }
+      />
+    </div>
   );
 }

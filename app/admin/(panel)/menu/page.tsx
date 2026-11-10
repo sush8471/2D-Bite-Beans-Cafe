@@ -37,7 +37,7 @@ export default async function AdminMenuPage() {
     <>
       <PageHeader
         title="Menu"
-        description="The sections of the menu, in the order they appear. Open a category to manage its dishes and prices."
+        description="Manage menu categories, dishes, and add-on options."
       />
 
       {error ? (
@@ -48,9 +48,8 @@ export default async function AdminMenuPage() {
 
       <CollectionManager table="menu_categories" rows={rows} />
 
-      <div className="admin-section-head">
+      <div className="admin-section-head mt-8">
         <h2>Add-ons</h2>
-        <p className="admin-help">The extra items shown at the bottom of the menu page.</p>
       </div>
 
       <CollectionManager table="add_ons" rows={addOnsResult.data ?? []} />

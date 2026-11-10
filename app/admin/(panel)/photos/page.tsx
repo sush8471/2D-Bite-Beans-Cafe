@@ -22,7 +22,7 @@ export default async function AdminPhotosPage() {
     <>
       <PageHeader
         title="Photos"
-        description="Upload the photos used on the menu page and the Experience gallery. Use the ↑ ↓ buttons to change their order."
+        description="Upload the photos used on the menu page and the Experience gallery."
       />
 
       {error ? (
