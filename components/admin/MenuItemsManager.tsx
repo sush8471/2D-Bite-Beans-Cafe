@@ -2,9 +2,17 @@
 
 import { useActionState, useEffect, useRef, useState } from 'react';
 import { deleteMenuItem, saveMenuItem } from '@/app/admin/actions';
-import { MenuItemPositionControls } from '@/components/admin/PositionControls';
 import SubmitButton from '@/components/admin/SubmitButton';
 import { emptyActionState, type ActionState } from '@/lib/admin/action-state';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Pencil, Trash2 } from 'lucide-react';
 
 type Variant = {
   id?: string;
@@ -59,7 +67,15 @@ function priceSummary(variants: Variant[]): string {
   return min === max ? `Rs. ${min}` : `Rs. ${min} – ${max}`;
 }
 
-function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
+function ItemForm({
+  categoryId,
+  item,
+  onSaved,
+}: {
+  categoryId: string;
+  item?: Item;
+  onSaved?: () => void;
+}) {
   const [state, formAction] = useActionState(saveMenuItem, emptyActionState);
   const [variants, setVariants] = useState<EditableVariant[]>(() =>
     item && item.variants.length > 0
@@ -69,11 +85,17 @@ function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
-    if (state.ok && !item) {
-      formRef.current?.reset();
-      setVariants([{ label: 'Standard', price: '' }]);
+    if (state.ok) {
+      if (!item) {
+        formRef.current?.reset();
+        setVariants([{ label: 'Standard', price: '' }]);
+      }
+      const timer = setTimeout(() => {
+        onSaved?.();
+      }, 700);
+      return () => clearTimeout(timer);
     }
-  }, [state.ok, item]);
+  }, [state.ok, item, onSaved]);
 
   const variantsPayload = JSON.stringify(
     variants.map((variant, index) => ({
@@ -99,16 +121,16 @@ function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
           <label>Description</label>
           <textarea
             name="description"
-            rows={3}
+            rows={2}
             defaultValue={item?.description ?? ''}
-            placeholder="Optional. Shown under the dish name."
+            placeholder="Key ingredients, taste profile or allergens"
           />
         </div>
 
         <div className="admin-field">
           <label className="admin-check">
             <input type="checkbox" name="is_new" defaultChecked={item?.is_new ?? false} />
-            <span>Mark as new</span>
+            <span>Mark as “NEW” badge</span>
           </label>
         </div>
 
@@ -117,7 +139,7 @@ function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
             <input
               type="checkbox"
               name="is_published"
-              defaultChecked={item?.is_published ?? true}
+              defaultChecked={item ? item.is_published : true}
             />
             <span>Visible on site</span>
           </label>
@@ -125,19 +147,19 @@ function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
       </div>
 
       <div className="admin-variants">
-        <div className="admin-variants__head">
+        <div className="admin-variants__header">
           <div>
-            <strong>Prices</strong>
-            <p className="admin-help">Add one row per size, protein, or option.</p>
+            <strong>Sizes &amp; prices</strong>
+            <p className="admin-help">
+              Every dish needs at least one price. Add more for sizes (e.g. Regular, Large).
+            </p>
           </div>
           <button
             type="button"
             className="admin-btn admin-btn--outline admin-btn--small"
-            onClick={() =>
-              setVariants((current) => [...current, { label: current.length === 0 ? 'Standard' : '', price: '' }])
-            }
+            onClick={() => setVariants((current) => [...current, { label: '', price: '' }])}
           >
-            + Add price
+            + Add option
           </button>
         </div>
 
@@ -146,7 +168,7 @@ function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
             <input
               type="text"
               value={variant.label}
-              placeholder="Standard, Chicken, With Boba…"
+              placeholder="e.g. Standard, Half, Full"
               aria-label={`Option ${index + 1} label`}
               onChange={(event) =>
                 setVariants((current) =>
@@ -195,75 +217,180 @@ function ItemForm({ categoryId, item }: { categoryId: string; item?: Item }) {
   );
 }
 
-function DeleteItemForm({ id }: { id: string }) {
+function DeleteItemForm({
+  id,
+  name,
+  onDeleted,
+}: {
+  id: string;
+  name?: string;
+  onDeleted?: () => void;
+}) {
   const [state, formAction] = useActionState(deleteMenuItem, emptyActionState);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  useEffect(() => {
+    if (state.ok) {
+      setConfirmOpen(false);
+      onDeleted?.();
+    }
+  }, [state.ok, onDeleted]);
 
   return (
-    <form
-      action={formAction}
-      className="admin-delete-form"
-      onSubmit={(event) => {
-        if (!window.confirm('Delete this dish and all of its prices?')) event.preventDefault();
-      }}
-    >
-      <input type="hidden" name="id" value={id} />
-      <SubmitButton className="admin-btn admin-btn--danger" pendingLabel="Deleting…">
-        Delete dish
-      </SubmitButton>
-      <FormMessage state={state} />
-    </form>
+    <>
+      <button
+        type="button"
+        onClick={() => setConfirmOpen(true)}
+        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer"
+        title="Delete dish"
+        aria-label="Delete dish"
+      >
+        <Trash2 className="size-5" />
+      </button>
+
+      <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <DialogContent className="max-w-sm rounded-2xl p-5 shadow-2xl z-[60]">
+          <DialogHeader className="space-y-2 text-left">
+            <DialogTitle className="text-base font-bold text-stone-900 dark:text-stone-100">
+              Delete dish?
+            </DialogTitle>
+            <DialogDescription className="text-sm text-stone-500">
+              Are you sure you want to delete {name ? `“${name}”` : 'this dish'} and all of its
+              prices? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+
+          {state.error ? (
+            <p className="admin-alert admin-alert--error text-xs" role="alert">
+              {state.error}
+            </p>
+          ) : null}
+
+          <div className="flex items-center justify-end gap-2 pt-3">
+            <button
+              type="button"
+              onClick={() => setConfirmOpen(false)}
+              className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800 transition-colors cursor-pointer"
+            >
+              Cancel
+            </button>
+            <form action={formAction}>
+              <input type="hidden" name="id" value={id} />
+              <SubmitButton
+                className="admin-btn admin-btn--danger !m-0 !px-4 !py-1.5 text-sm"
+                pendingLabel="Deleting…"
+              >
+                Delete
+              </SubmitButton>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
 export default function MenuItemsManager({ categoryId, items }: MenuItemsManagerProps) {
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
+
   const sorted = [...items].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
 
   return (
     <div className="admin-collection">
-      <details className="admin-row admin-row--new">
-        <summary>
-          <span className="admin-row__plus">+</span>
-          <span className="admin-row__summary">
-            <strong>Add dish</strong>
-            <span>Create a new dish with one or more prices</span>
-          </span>
-        </summary>
-        <div className="admin-row__body">
-          <ItemForm categoryId={categoryId} />
-        </div>
-      </details>
+      {/* Top Add Trigger with Dialog Modal */}
+      <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
+        <DialogTrigger asChild>
+          <button
+            type="button"
+            className="admin-row admin-row--new flex items-center gap-3 p-3 w-full text-left cursor-pointer hover:bg-rose-50/40 dark:hover:bg-rose-950/20 transition-colors"
+          >
+            <span className="admin-row__plus">+</span>
+            <span className="admin-row__summary">
+              <strong className="text-sm font-semibold">Add dish</strong>
+            </span>
+          </button>
+        </DialogTrigger>
+        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
+          <DialogHeader className="pb-3 border-b border-border/50">
+            <DialogTitle className="text-lg font-bold">Add New Dish</DialogTitle>
+          </DialogHeader>
+          <div className="py-2">
+            <ItemForm
+              categoryId={categoryId}
+              onSaved={() => setIsAddOpen(false)}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {sorted.length === 0 ? (
         <p className="admin-empty">No dishes yet. Use “Add dish” above.</p>
       ) : null}
 
-      {sorted.map((item, index) => (
-        <details className="admin-row" key={item.id}>
-          <summary>
-            <span className="admin-row__thumb admin-row__thumb--text">
-              {item.is_new ? 'NEW' : '—'}
-            </span>
-            <span className="admin-row__summary">
-              <strong>{item.name}</strong>
-              <span>{priceSummary(item.variants)}</span>
-            </span>
-            <span
-              className={`admin-pill ${item.is_published ? 'admin-pill--live' : 'admin-pill--draft'}`}
-            >
-              {item.is_published ? 'Live' : 'Hidden'}
-            </span>
-          </summary>
-          <div className="admin-row__body">
-            <MenuItemPositionControls
-              categoryId={categoryId}
-              id={item.id}
-              isFirst={index === 0}
-              isLast={index === sorted.length - 1}
-            />
-            <ItemForm categoryId={categoryId} item={item} />
-            <DeleteItemForm id={item.id} />
+      {/* List of Dishes with Modal Edit Trigger */}
+      {sorted.map((item) => (
+        <div
+          className="admin-row flex flex-col sm:flex-row sm:items-center sm:justify-between p-3.5 gap-3"
+          key={item.id}
+        >
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="admin-row__summary min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <strong className="truncate text-sm font-semibold">{item.name}</strong>
+                {item.is_new ? (
+                  <span className="px-1.5 py-0.5 text-[9px] uppercase font-bold tracking-wider rounded bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
+                    NEW
+                  </span>
+                ) : null}
+              </div>
+              <span className="truncate text-xs text-muted-foreground font-mono">
+                {priceSummary(item.variants)}
+              </span>
+            </div>
           </div>
-        </details>
+
+          <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+            {/* Edit Modal Dialog for this Dish */}
+            <Dialog
+              open={editingItemId === item.id}
+              onOpenChange={(open) => setEditingItemId(open ? item.id : null)}
+            >
+              <DialogTrigger asChild>
+                <button
+                  type="button"
+                  className="size-7 rounded-md text-stone-500 hover:text-stone-900 hover:bg-stone-100 dark:hover:bg-stone-800 inline-flex items-center justify-center cursor-pointer transition-colors"
+                  aria-label={`Edit ${item.name}`}
+                  title={`Edit ${item.name}`}
+                >
+                  <Pencil className="size-3.5" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
+                <DialogHeader className="pb-3 border-b border-border/50">
+                  <div className="flex items-center justify-between gap-3 pr-6">
+                    <DialogTitle className="text-lg font-bold truncate">
+                      Edit: {item.name}
+                    </DialogTitle>
+                    <DeleteItemForm
+                      id={item.id}
+                      name={item.name}
+                      onDeleted={() => setEditingItemId(null)}
+                    />
+                  </div>
+                </DialogHeader>
+
+                <div className="py-2">
+                  <ItemForm
+                    categoryId={categoryId}
+                    item={item}
+                    onSaved={() => setEditingItemId(null)}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
       ))}
     </div>
   );

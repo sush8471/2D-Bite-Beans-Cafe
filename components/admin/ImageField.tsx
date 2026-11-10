@@ -53,8 +53,8 @@ export default function ImageField({ name, defaultValue = '', folder = 'uploads'
         <div className="admin-image-empty">No image selected</div>
       )}
 
-      <div className="admin-image-actions">
-        <label className="admin-btn admin-btn--outline admin-btn--file">
+      <div className="admin-image-actions flex items-center gap-2">
+        <label className="admin-btn admin-btn--outline admin-btn--file !rounded-lg !py-1.5 !px-3 !text-xs !font-medium">
           {uploading ? 'Uploading…' : 'Upload image'}
           <input
             ref={inputRef}
@@ -65,20 +65,15 @@ export default function ImageField({ name, defaultValue = '', folder = 'uploads'
           />
         </label>
         {url ? (
-          <button type="button" className="admin-btn admin-btn--ghost-dark" onClick={() => setUrl('')}>
+          <button
+            type="button"
+            className="admin-btn admin-btn--ghost-dark !rounded-lg !py-1.5 !px-3 !text-xs !font-medium"
+            onClick={() => setUrl('')}
+          >
             Remove
           </button>
         ) : null}
       </div>
-
-      <input
-        type="text"
-        className="admin-url-input"
-        value={url}
-        onChange={(event) => setUrl(event.target.value)}
-        placeholder="/assets/... or https://..."
-        aria-label="Image URL"
-      />
 
       {error ? <p className="admin-help admin-help--error">{error}</p> : null}
       <p className="admin-help">JPG, PNG, WebP, GIF or AVIF · max 10 MB</p>
