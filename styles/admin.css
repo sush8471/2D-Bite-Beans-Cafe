@@ -244,7 +244,7 @@
   font-size: 1.15rem;
 }
 
-.admin-card h2 + .admin-help {
+.admin-card h2+.admin-help {
   margin-bottom: 1rem;
 }
 
@@ -308,7 +308,7 @@
   line-height: 1.65;
 }
 
-.admin-list li + li {
+.admin-list li+li {
   margin-top: 0.35rem;
 }
 
@@ -344,12 +344,15 @@
 }
 
 .admin-btn--primary {
-  background-color: var(--accent);
-  color: var(--white);
+  background-color: #8B2635;
+  background-color: var(--accent, #8B2635);
+  color: #FFFFFF !important;
 }
 
 .admin-btn--primary:hover {
-  background-color: var(--accent-hover);
+  background-color: #6e1d29;
+  background-color: var(--accent-hover, #6e1d29);
+  color: #FFFFFF !important;
 }
 
 .admin-btn--outline {
@@ -421,7 +424,7 @@
   grid-column: 1 / -1;
 }
 
-.admin-field > label {
+.admin-field>label {
   color: var(--text-primary);
   font-size: 0.78rem;
   font-weight: 600;
@@ -584,7 +587,7 @@
   overflow: hidden;
 }
 
-.admin-row > summary {
+.admin-row>summary {
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -593,15 +596,15 @@
   list-style: none;
 }
 
-.admin-row > summary::-webkit-details-marker {
+.admin-row>summary::-webkit-details-marker {
   display: none;
 }
 
-.admin-row > summary:hover {
+.admin-row>summary:hover {
   background-color: rgba(139, 38, 53, 0.025);
 }
 
-.admin-row[open] > summary {
+.admin-row[open]>summary {
   border-bottom: 1px solid rgba(26, 26, 26, 0.06);
 }
 
@@ -676,11 +679,11 @@
   box-shadow: none;
 }
 
-.admin-row--new > summary {
+.admin-row--new>summary {
   color: var(--accent);
 }
 
-.admin-row--new > summary .admin-row__summary strong {
+.admin-row--new>summary .admin-row__summary strong {
   color: var(--accent);
 }
 
@@ -733,8 +736,10 @@
 }
 
 .admin-image-preview {
-  width: 100%;
-  max-height: 190px;
+  max-width: 200px;
+  max-height: 160px;
+  width: auto;
+  height: auto;
   object-fit: contain;
   padding: 0.3rem;
   border-radius: 9px;
@@ -936,7 +941,7 @@
   line-height: 1.65;
 }
 
-.admin-steps li + li {
+.admin-steps li+li {
   margin-top: 0.9rem;
 }
 
@@ -1065,7 +1070,7 @@
 }
 
 @media (max-width: 560px) {
-  .admin-row > summary {
+  .admin-row>summary {
     flex-wrap: wrap;
   }
 

@@ -193,7 +193,7 @@ function DeleteForm({
       <button
         type="button"
         onClick={() => setConfirmOpen(true)}
-        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer"
+        className="size-8 rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 inline-flex items-center justify-center transition-colors cursor-pointer mr-1"
         title={`Delete ${config.singular}`}
         aria-label={`Delete ${config.singular}`}
       >
@@ -276,8 +276,10 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
           </button>
         </DialogTrigger>
         <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
-          <DialogHeader className="pb-3 border-b border-border/50">
-            <DialogTitle className="text-lg font-bold">Add {config.singular}</DialogTitle>
+          <DialogHeader className="pt-1.5 pb-4 border-b border-border/50">
+            <div className="flex items-center justify-between gap-4 pr-10 min-h-[2.5rem]">
+              <DialogTitle className="text-lg font-bold">Add {config.singular}</DialogTitle>
+            </div>
           </DialogHeader>
           <div className="py-2">
             <RowForm config={config} row={blank} onSaved={() => setIsAddOpen(false)} />
@@ -348,8 +350,8 @@ export default function CollectionManager({ table, rows }: CollectionManagerProp
                   </button>
                 </DialogTrigger>
                 <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6 shadow-2xl">
-                  <DialogHeader className="pb-3 border-b border-border/50">
-                    <div className="flex items-center justify-between gap-3 pr-6">
+                  <DialogHeader className="pt-1.5 pb-4 border-b border-border/50">
+                    <div className="flex items-center justify-between gap-4 pr-10 min-h-[2.5rem]">
                       <DialogTitle className="text-lg font-bold truncate">
                         Edit: {title}
                       </DialogTitle>
