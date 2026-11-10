@@ -89,7 +89,6 @@ export default function ImageField({ name, defaultValue = '', folder = 'uploads'
         </div>
 
         {error ? <p className="admin-help admin-help--error text-xs">{error}</p> : null}
-        <p className="text-[11px] text-muted-foreground">JPG, PNG, WebP, GIF or AVIF · max 10 MB</p>
       </div>
     </div>
   );
