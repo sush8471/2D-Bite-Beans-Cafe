@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
+import GoogleReviewsSection from '@/components/GoogleReviewsSection';
+import HighlightsMarquee from '@/components/HighlightsMarquee';
 import { copyText, getSiteContent, toCopyMap } from '@/lib/content';
 import { safeImageUrl, whatsappUrl } from '@/lib/utils';
 
@@ -54,14 +56,6 @@ export default async function HomePage() {
       <section id="space" className="section container">
         <div className="section-header reveal">
           <span className="script-label">{copyText(copy, 'home.space.label', 'The Space')}</span>
-          <h2 className="heading-lg">{copyText(copy, 'home.space.title', 'Step Into a Sketchbook')}</h2>
-          <p className="body-text">
-            {copyText(
-              copy,
-              'home.space.body',
-              'Monochrome walls, ink-style furniture, and surreal comic-book aesthetics await around every corner.'
-            )}
-          </p>
         </div>
 
         {homePhotos.length > 0 ? (
@@ -77,15 +71,14 @@ export default async function HomePage() {
                 />
                 <figcaption className="experience-teaser__caption">
                   <h3>{photo.title}</h3>
-                  <p>{photo.description}</p>
                 </figcaption>
               </figure>
             ))}
           </div>
         ) : null}
 
-        <div className="text-center mt-2 reveal">
-          <Link href="/experience" className="btn btn--secondary">
+        <div className="text-center reveal" style={{ marginTop: '2.75rem' }}>
+          <Link href="/experience" className="btn btn--primary">
             {copyText(copy, 'global.cta.see_gallery', 'See Full Gallery')}
           </Link>
         </div>
@@ -98,35 +91,9 @@ export default async function HomePage() {
               <span className="script-label">
                 {copyText(copy, 'home.highlights.label', 'Fan Favourites')}
               </span>
-              <h2 className="heading-lg">
-                {copyText(copy, 'home.highlights.title', 'Menu Highlights')}
-              </h2>
             </div>
           </div>
-          <div className="highlights__scroll reveal-group" id="highlights-scroll">
-            {highlights.map((item) => (
-              <article key={item.id ?? item.title} className="highlight-card reveal">
-                <div className="highlight-card__image">
-                  <SiteImage src={safeImageUrl(item.image_url)} alt={item.title} />
-                  {item.badge ? (
-                    <span className="highlight-card__badge">{item.badge}</span>
-                  ) : null}
-                </div>
-                <div className="highlight-card__content">
-                  {item.category ? (
-                    <span className="highlight-card__category">{item.category}</span>
-                  ) : null}
-                  <h3 className="highlight-card__title">{item.title}</h3>
-                  {item.description ? (
-                    <p className="highlight-card__desc">{item.description}</p>
-                  ) : null}
-                  {item.price_label ? (
-                    <p className="highlight-card__price">{item.price_label}</p>
-                  ) : null}
-                </div>
-              </article>
-            ))}
-          </div>
+          <HighlightsMarquee highlights={highlights} />
           <div className="highlights__footer reveal">
             <Link href="/menu" className="btn btn--primary">
               {copyText(copy, 'global.cta.view_menu', 'View Full Menu')}
@@ -155,6 +122,8 @@ export default async function HomePage() {
         </section>
       ) : null}
 
+      <GoogleReviewsSection />
+
       <section className="visit-snapshot container">
         <div className="visit-snapshot__card reveal">
           <div className="visit-snapshot__image">
@@ -164,7 +133,7 @@ export default async function HomePage() {
             />
           </div>
           <div className="visit-snapshot__content">
-            <h3>{copyText(copy, 'home.visit.title', 'Visit Us')}</h3>
+            <h3 className="text-center">{copyText(copy, 'home.visit.title', 'Visit Us')}</h3>
 
             <div className="visit-snapshot__detail">
               <span className="visit-snapshot__detail-icon">
