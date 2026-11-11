@@ -14,7 +14,7 @@ export default async function VisitPage() {
   const copy = toCopyMap(content);
   const { settings, amenities } = content;
 
-  const mapsHref = mapsSearchUrl(settings.address);
+  const mapsHref = settings.maps_url || mapsSearchUrl(settings.address);
   const instagramHandle = instagramHandleFromUrl(settings.instagram_url) || settings.instagram_handle;
 
   return (
