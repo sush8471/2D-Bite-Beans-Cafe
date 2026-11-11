@@ -20,15 +20,10 @@ function text(copy: CopyMap, key: string, fallback: string) {
 }
 
 export default function MenuExplorer({ categories, menuGallery, addOns, copy }: MenuExplorerProps) {
-  const initialFilter = categories.some((category) => category.slug === 'appetizers')
-    ? 'appetizers'
-    : 'all';
-
   const initialExpanded: Record<string, boolean> =
-    initialFilter === 'all' ? {} : { [initialFilter]: true };
+    categories.length > 0 ? { [categories[0].slug]: true } : {};
 
   const [tab, setTab] = useState<Tab>('items');
-  const [filter, setFilter] = useState(initialFilter);
   const [expanded, setExpanded] = useState<Record<string, boolean>>(initialExpanded);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -78,11 +73,6 @@ export default function MenuExplorer({ categories, menuGallery, addOns, copy }: 
     }
   }, [currentSlide, gallery.length]);
 
-  function selectFilter(value: string) {
-    setFilter(value);
-    setExpanded(value === 'all' ? {} : { [value]: true });
-  }
-
   function toggleCategory(slug: string) {
     setExpanded((previous) => ({ ...previous, [slug]: !previous[slug] }));
   }
@@ -124,36 +114,9 @@ export default function MenuExplorer({ categories, menuGallery, addOns, copy }: 
         </div>
       </header>
 
-      <div className="menu-tab-panel" id="panel-items" style={{ display: tab === 'items' ? undefined : 'none' }}>
-        <div className="container" style={{ marginBottom: '2rem' }}>
-          <div className="filter-bar reveal" id="menu-filter">
-            <button
-              type="button"
-              className={`filter-bar__btn${filter === 'all' ? ' active' : ''}`}
-              data-filter="all"
-              aria-pressed={filter === 'all'}
-              onClick={() => selectFilter('all')}
-            >
-              All
-            </button>
-            {categories.map((category) => (
-              <button
-                key={category.slug}
-                type="button"
-                className={`filter-bar__btn${filter === category.slug ? ' active' : ''}`}
-                data-filter={category.slug}
-                aria-pressed={filter === category.slug}
-                onClick={() => selectFilter(category.slug)}
-              >
-                {category.filter_label || category.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
+      <div className="menu-tab-panel" id="panel-items" style={{ display: tab === 'items' ? undefined : 'none', marginTop: '2.5rem' }}>
         <div className="menu-sections" id="menu-sections">
           {categories.map((category) => {
-            const visible = filter === 'all' || filter === category.slug;
             const isExpanded = Boolean(expanded[category.slug]);
 
             return (
@@ -161,7 +124,6 @@ export default function MenuExplorer({ categories, menuGallery, addOns, copy }: 
                 key={category.slug}
                 className={`menu-section reveal-group${isExpanded ? ' expanded' : ''}`}
                 data-category={category.slug}
-                style={{ display: visible ? undefined : 'none' }}
               >
                 <div
                   className="menu-section__banner"
